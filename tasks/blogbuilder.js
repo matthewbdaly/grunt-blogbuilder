@@ -15,6 +15,9 @@ module.exports = function (grunt) {
 
   grunt.registerMultiTask('blogbuilder', 'Grunt plugin for building a blog.', function () {
 
+    // Get Handlebars
+    var Handlebars = require('handlebars');
+
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
       punctuation: '.',
