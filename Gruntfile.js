@@ -35,6 +35,10 @@ module.exports = function (grunt) {
     blogbuilder: {
       default_options: {
         options: {
+          data: {
+            title: 'My new blog',
+            description: 'A blog'
+          },
           template: {
             post: 'templates/post.hbs',
             page: 'templates/page.hbs',
@@ -53,6 +57,10 @@ module.exports = function (grunt) {
       },
       custom_options: {
         options: {
+          data: {
+            title: 'My new blog',
+            description: 'A blog'
+          },
           template: {
             post: 'templates/post.hbs',
             page: 'templates/page.hbs',

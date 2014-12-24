@@ -8,15 +8,15 @@
         <link rel="stylesheet" type="text/css" href="/static/bower_components/bootstrap-sass/dist/css/bootstrap.min.css" media="all" />
         <link rel="stylesheet" type="text/css" href="/static/bower_components/flat-ui/dist/css/flat-ui.min.css" media="all" />
         <link rel="stylesheet" type="text/css" href="/static/bower_components/highlightjs/styles/zenburn.css" media="all" />
-        <link rel="alternate" type="application/rss+xml" title="My Site - feed" href="/index.xml" />
-        <title>My Site</title>
+        <link rel="alternate" type="application/rss+xml" title="{{ data.title }}- feed" href="/index.xml" />
+        <title>{{ data.title }}</title>
     </head>
     <body>
         <header>
             <div class="container">
                 <div class="page-header">
-                    <h1>My Site</h1>
-                    <h2>My Site</h2>
+                    <h1>{{ data.title }}</h1>
+                    <h2>{{ data.description }}</h2>
                     <nav>
                         <a href="/">Home</a> | <a href="/archive.html">Archives</a> | <a href="/about.html">About</a> | <a href="/rss.xml">RSS</a>
                     </nav>

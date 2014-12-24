@@ -20,6 +20,7 @@ module.exports = function (grunt) {
       punctuation: '.',
       separator: ', '
     });
+    grunt.log.write(JSON.stringify(options.data.title));
 
     // Get Handlebars
     var Handlebars = require('handlebars');
@@ -50,6 +51,7 @@ module.exports = function (grunt) {
 
         // Render the Handlebars template with the content
         var data = {
+            data: options.data,
             post: {
                 content: mdcontent
             }
@@ -65,6 +67,7 @@ module.exports = function (grunt) {
 
         // Render the Handlebars template with the content
         var data = {
+            data: options.data,
             post: {
                 content: mdcontent
             }
