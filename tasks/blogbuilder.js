@@ -47,10 +47,14 @@ module.exports = function (grunt) {
         var md = new MarkedMetaData(file);
         md.defineTokens('---', '---');
         var mdcontent = md.markdown();
+        var meta = md.metadata();
 
         // Render the Handlebars template with the content
         var data = {
             data: options.data,
+            meta: {
+                title: meta.title.replace(/"/g, '')
+            },
             post: {
                 content: mdcontent
             }
@@ -69,10 +73,14 @@ module.exports = function (grunt) {
         var md = new MarkedMetaData(file);
         md.defineTokens('---', '---');
         var mdcontent = md.markdown();
+        var meta = md.metadata();
 
         // Render the Handlebars template with the content
         var data = {
             data: options.data,
+            meta: {
+                title: meta.title.replace(/"/g, '')
+            },
             post: {
                 content: mdcontent
             }
