@@ -41,7 +41,7 @@ module.exports = function (grunt) {
     var postTemplate = Handlebars.compile(grunt.file.read(options.template.post));
     var pageTemplate = Handlebars.compile(grunt.file.read(options.template.page));
 
-    // Iterate through source files
+    // Generate pages
     pages.forEach(function (file) {
         // Convert it to Markdown
         var md = new MarkedMetaData(file);
@@ -62,6 +62,8 @@ module.exports = function (grunt) {
         grunt.file.mkdir(path);
         grunt.file.write(path + '/index.html', output);
     });
+
+    // Generate posts
     posts.forEach(function (file) {
         // Convert it to Markdown
         var md = new MarkedMetaData(file);
@@ -82,6 +84,11 @@ module.exports = function (grunt) {
         grunt.file.mkdir(path);
         grunt.file.write(path + '/index.html', output);
     });
+
+    // Generate index
+    // First, break it into chunks
+
+    // Then, loop through each chunk and write the content to the file
 
     // Iterate over all specified file groups.
     this.files.forEach(function (file) {
