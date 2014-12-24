@@ -35,6 +35,10 @@ module.exports = function (grunt) {
     blogbuilder: {
       default_options: {
         options: {
+            src: {
+                posts: 'content/posts/',
+                pages: 'content/pages/'
+            }
         },
         files: {
           'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123']
@@ -42,6 +46,10 @@ module.exports = function (grunt) {
       },
       custom_options: {
         options: {
+          src: {
+            posts: 'content/posts/',
+            pages: 'content/pages/'
+          },
           separator: ': ',
           punctuation: ' !!!'
         },

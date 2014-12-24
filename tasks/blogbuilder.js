@@ -27,6 +27,22 @@ module.exports = function (grunt) {
       separator: ', '
     });
 
+    // Get matching files
+    var posts = grunt.file.expand(options.src.posts + '*.md');
+    var pages = grunt.file.expand(options.src.pages + '*.md');
+
+    // Iterate through source files
+    pages.forEach(function (file) {
+        // Get page content
+        var content = grunt.file.read(file);
+        grunt.log.write(content);
+    });
+    posts.forEach(function (file) {
+        // Get page content
+        var content = grunt.file.read(file);
+        grunt.log.write(content);
+    });
+
     // Iterate over all specified file groups.
     this.files.forEach(function (file) {
       // Concat specified files.
