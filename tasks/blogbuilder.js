@@ -18,6 +18,9 @@ module.exports = function (grunt) {
     // Get Handlebars
     var Handlebars = require('handlebars');
 
+    // Get Marked Metadata
+    var mkmeta = require('marked-metadata');
+
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
       punctuation: '.',
