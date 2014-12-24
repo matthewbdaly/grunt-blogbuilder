@@ -19,7 +19,7 @@ module.exports = function (grunt) {
     var Handlebars = require('handlebars');
 
     // Get Marked Metadata
-    var mkmeta = require('marked-metadata');
+    var MarkedMetaData = require('marked-metadata');
 
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
@@ -33,14 +33,18 @@ module.exports = function (grunt) {
 
     // Iterate through source files
     pages.forEach(function (file) {
-        // Get page content
-        var content = grunt.file.read(file);
-        grunt.log.write(content);
+        // Convert it to Markdown
+        var md = new MarkedMetaData(file);
+        md.defineTokens('---', '---');
+        var mdcontent = md.markdown();
+        grunt.log.write(mdcontent);
     });
     posts.forEach(function (file) {
-        // Get page content
-        var content = grunt.file.read(file);
-        grunt.log.write(content);
+        // Convert it to Markdown
+        var md = new MarkedMetaData(file);
+        md.defineTokens('---', '---');
+        var mdcontent = md.markdown();
+        grunt.log.write(mdcontent);
     });
 
     // Iterate over all specified file groups.
