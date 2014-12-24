@@ -15,14 +15,17 @@ module.exports = function (grunt) {
 
   grunt.registerMultiTask('blogbuilder', 'Grunt plugin for building a blog.', function () {
 
+    // Declare variables
+    var md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetaData, posts, pages, postTemplate, pageTemplate, indexTemplate;
+
     // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
+    options = this.options({
       punctuation: '.',
       separator: ', '
     });
 
     // Get Handlebars
-    var Handlebars = require('handlebars');
+    Handlebars = require('handlebars');
 
     // Register partials
     Handlebars.registerPartial({
@@ -31,26 +34,27 @@ module.exports = function (grunt) {
     });
 
     // Get Marked Metadata
-    var MarkedMetaData = require('marked-metadata');
+    MarkedMetaData = require('marked-metadata');
 
     // Get matching files
-    var posts = grunt.file.expand(options.src.posts + '*.md');
-    var pages = grunt.file.expand(options.src.pages + '*.md');
+    posts = grunt.file.expand(options.src.posts + '*.md');
+    pages = grunt.file.expand(options.src.pages + '*.md');
 
     // Get Handlebars templates
-    var postTemplate = Handlebars.compile(grunt.file.read(options.template.post));
-    var pageTemplate = Handlebars.compile(grunt.file.read(options.template.page));
+    postTemplate = Handlebars.compile(grunt.file.read(options.template.post));
+    pageTemplate = Handlebars.compile(grunt.file.read(options.template.page));
+    indexTemplate = Handlebars.compile(grunt.file.read(options.template.index));
 
     // Generate pages
     pages.forEach(function (file) {
         // Convert it to Markdown
-        var md = new MarkedMetaData(file);
+        md = new MarkedMetaData(file);
         md.defineTokens('---', '---');
-        var mdcontent = md.markdown();
-        var meta = md.metadata();
+        mdcontent = md.markdown();
+        meta = md.metadata();
 
         // Render the Handlebars template with the content
-        var data = {
+        data = {
             data: options.data,
             meta: {
                 title: meta.title.replace(/"/g, '')
@@ -59,10 +63,10 @@ module.exports = function (grunt) {
                 content: mdcontent
             }
         };
-        var output = pageTemplate(data);
+        output = pageTemplate(data);
 
         // Write page to destination
-        var path = options.www.dest + '/' + (file.replace(options.src.pages, '').replace('.md', ''));
+        path = options.www.dest + '/' + (file.replace(options.src.pages, '').replace('.md', ''));
         grunt.file.mkdir(path);
         grunt.file.write(path + '/index.html', output);
     });
@@ -70,13 +74,13 @@ module.exports = function (grunt) {
     // Generate posts
     posts.forEach(function (file) {
         // Convert it to Markdown
-        var md = new MarkedMetaData(file);
+        md = new MarkedMetaData(file);
         md.defineTokens('---', '---');
-        var mdcontent = md.markdown();
-        var meta = md.metadata();
+        mdcontent = md.markdown();
+        meta = md.metadata();
 
         // Render the Handlebars template with the content
-        var data = {
+        data = {
             data: options.data,
             meta: {
                 title: meta.title.replace(/"/g, '')
@@ -85,10 +89,10 @@ module.exports = function (grunt) {
                 content: mdcontent
             }
         };
-        var output = postTemplate(data);
+        output = postTemplate(data);
 
         // Write post to destination
-        var path = options.www.dest + '/blog/' + (file.replace(options.src.posts, '').replace('.md', ''));
+        path = options.www.dest + '/blog/' + (file.replace(options.src.posts, '').replace('.md', ''));
         grunt.file.mkdir(path);
         grunt.file.write(path + '/index.html', output);
     });
