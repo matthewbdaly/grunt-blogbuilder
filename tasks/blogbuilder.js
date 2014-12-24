@@ -20,7 +20,6 @@ module.exports = function (grunt) {
       punctuation: '.',
       separator: ', '
     });
-    grunt.log.write(JSON.stringify(options.data.title));
 
     // Get Handlebars
     var Handlebars = require('handlebars');
@@ -57,7 +56,11 @@ module.exports = function (grunt) {
             }
         };
         var output = pageTemplate(data);
-        grunt.log.write(output);
+
+        // Write page to destination
+        var path = options.www.dest + '/' + (file.replace(options.src.pages, '').replace('.md', ''));
+        grunt.file.mkdir(path);
+        grunt.file.write(path + '/index.html', output);
     });
     posts.forEach(function (file) {
         // Convert it to Markdown
@@ -73,7 +76,11 @@ module.exports = function (grunt) {
             }
         };
         var output = postTemplate(data);
-        grunt.log.write(output);
+
+        // Write post to destination
+        var path = options.www.dest + '/blog/' + (file.replace(options.src.posts, '').replace('.md', ''));
+        grunt.file.mkdir(path);
+        grunt.file.write(path + '/index.html', output);
     });
 
     // Iterate over all specified file groups.

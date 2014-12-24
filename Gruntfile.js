@@ -49,6 +49,9 @@ module.exports = function (grunt) {
           src: {
             posts: 'content/posts/',
             pages: 'content/pages/'
+          },
+          www: {
+            dest: 'build'
           }
         },
         files: {
@@ -73,7 +76,10 @@ module.exports = function (grunt) {
             pages: 'content/pages/'
           },
           separator: ': ',
-          punctuation: ' !!!'
+          punctuation: ' !!!',
+          www: {
+            dest: 'build'
+          }
         },
         files: {
           'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123']
