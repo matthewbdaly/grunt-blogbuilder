@@ -31,20 +31,40 @@ module.exports = function (grunt) {
     var posts = grunt.file.expand(options.src.posts + '*.md');
     var pages = grunt.file.expand(options.src.pages + '*.md');
 
+    // Get Handlebars templates
+    var postTemplate = Handlebars.compile(grunt.file.read(options.template.post));
+    var pageTemplate = Handlebars.compile(grunt.file.read(options.template.page));
+
     // Iterate through source files
     pages.forEach(function (file) {
         // Convert it to Markdown
         var md = new MarkedMetaData(file);
         md.defineTokens('---', '---');
         var mdcontent = md.markdown();
-        grunt.log.write(mdcontent);
+
+        // Render the Handlebars template with the content
+        var data = {
+            post: {
+                content: mdcontent
+            }
+        };
+        var output = pageTemplate(data);
+        grunt.log.write(output);
     });
     posts.forEach(function (file) {
         // Convert it to Markdown
         var md = new MarkedMetaData(file);
         md.defineTokens('---', '---');
         var mdcontent = md.markdown();
-        grunt.log.write(mdcontent);
+
+        // Render the Handlebars template with the content
+        var data = {
+            post: {
+                content: mdcontent
+            }
+        };
+        var output = postTemplate(data);
+        grunt.log.write(output);
     });
 
     // Iterate over all specified file groups.

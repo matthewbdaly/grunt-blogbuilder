@@ -35,10 +35,16 @@ module.exports = function (grunt) {
     blogbuilder: {
       default_options: {
         options: {
-            src: {
-                posts: 'content/posts/',
-                pages: 'content/pages/'
-            }
+          template: {
+            post: 'templates/post.hbs',
+            page: 'templates/page.hbs',
+            index: 'templates/index.hbs',
+            wrapper: 'templates/wrapper.hbs'
+          },
+          src: {
+            posts: 'content/posts/',
+            pages: 'content/pages/'
+          }
         },
         files: {
           'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123']
@@ -46,6 +52,12 @@ module.exports = function (grunt) {
       },
       custom_options: {
         options: {
+          template: {
+            post: 'templates/post.hbs',
+            page: 'templates/page.hbs',
+            index: 'templates/index.hbs',
+            wrapper: 'templates/wrapper.hbs'
+          },
           src: {
             posts: 'content/posts/',
             pages: 'content/pages/'
