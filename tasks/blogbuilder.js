@@ -15,17 +15,23 @@ module.exports = function (grunt) {
 
   grunt.registerMultiTask('blogbuilder', 'Grunt plugin for building a blog.', function () {
 
-    // Get Handlebars
-    var Handlebars = require('handlebars');
-
-    // Get Marked Metadata
-    var MarkedMetaData = require('marked-metadata');
-
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
       punctuation: '.',
       separator: ', '
     });
+
+    // Get Handlebars
+    var Handlebars = require('handlebars');
+
+    // Register partials
+    Handlebars.registerPartial({
+        header: grunt.file.read(options.template.header),
+        footer: grunt.file.read(options.template.footer)
+    });
+
+    // Get Marked Metadata
+    var MarkedMetaData = require('marked-metadata');
 
     // Get matching files
     var posts = grunt.file.expand(options.src.posts + '*.md');

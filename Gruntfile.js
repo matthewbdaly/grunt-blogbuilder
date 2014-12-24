@@ -39,7 +39,8 @@ module.exports = function (grunt) {
             post: 'templates/post.hbs',
             page: 'templates/page.hbs',
             index: 'templates/index.hbs',
-            wrapper: 'templates/wrapper.hbs'
+            header: 'templates/partials/header.hbs',
+            footer: 'templates/partials/footer.hbs'
           },
           src: {
             posts: 'content/posts/',
@@ -56,7 +57,8 @@ module.exports = function (grunt) {
             post: 'templates/post.hbs',
             page: 'templates/page.hbs',
             index: 'templates/index.hbs',
-            wrapper: 'templates/wrapper.hbs'
+            header: 'templates/partials/header.hbs',
+            footer: 'templates/partials/footer.hbs'
           },
           src: {
             posts: 'content/posts/',
