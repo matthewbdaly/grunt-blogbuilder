@@ -21,7 +21,8 @@ module.exports = function (grunt) {
     // Merge task-specific and/or target-specific options with these defaults.
     options = this.options({
       punctuation: '.',
-      separator: ', '
+      separator: ', ',
+      size: 5
     });
 
     // Get Handlebars

@@ -77,6 +77,7 @@ module.exports = function (grunt) {
           },
           separator: ': ',
           punctuation: ' !!!',
+          size: 5,
           www: {
             dest: 'build'
           }
