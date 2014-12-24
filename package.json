@@ -24,7 +24,7 @@
     "handlebars": "^2.0.0",
     "jshint-stylish": "~0.1.5",
     "load-grunt-tasks": "~0.3.0",
-    "marked": "^0.3.2"
+    "marked-metadata": "0.0.6"
   },
   "scripts": {
     "test": "grunt test"
