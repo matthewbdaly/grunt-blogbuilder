@@ -133,6 +133,12 @@ module.exports = function (grunt) {
         }
 
         // Generate content
+        if (Number(chunk) + 1 < postChunks.length) {
+          data.nextChunk = Number(chunk) + 2;
+        }
+        if (Number(chunk) + 1 > 1) {
+          data.prevChunk = Number(chunk);
+        }
         output = indexTemplate(data);
 
         // If this is the first page, also write it as the index

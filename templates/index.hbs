@@ -9,4 +9,14 @@
 </div>
 {{/each}}
 
+ <ul class="pager">
+{{#if nextChunk}}
+    <li><a href="/posts/{{ nextChunk }}/">Older</a></li>
+{{/if}}
+
+{{#if prevChunk}}
+    <li><a href="/posts/{{ prevChunk }}/">Newer</a></li>
+{{/if}}
+ </ul>
+
 {{> footer }}
