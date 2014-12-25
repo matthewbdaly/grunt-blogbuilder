@@ -99,6 +99,41 @@ module.exports = function (grunt) {
         grunt.file.write(path + '/index.html', output);
     });
 
+    // Generate archive
+    post_items = posts.reverse();
+    data = {
+        data: options.data,
+        posts: []
+    };
+
+    // Get the posts
+    for (post in post_items) {
+        // Convert it to Markdown
+        md = new MarkedMetaData(post_items[post]);
+        md.defineTokens('---', '---');
+        mdcontent = md.markdown();
+        meta = md.metadata();
+
+        // Push it to the array
+        permalink = '/blog/' + post_items[post].replace(options.src.posts, '').replace('.md', '') + '/';
+        newObj = {
+            meta: {
+                title: meta.title.replace(/"/g, ''),
+                permalink: permalink
+            },
+            post: {
+                content: mdcontent
+            }
+        };
+        data.posts.push(newObj);
+    }
+    output = archiveTemplate(data);
+
+    // Write the content to the file
+    path = options.www.dest + '/archive/';
+    grunt.file.mkdir(path);
+    grunt.file.write(path + '/index.html', output);
+
     // Generate index
     // First, break it into chunks
     post_items = posts.reverse();
