@@ -16,7 +16,7 @@ module.exports = function (grunt) {
   grunt.registerMultiTask('blogbuilder', 'Grunt plugin for building a blog.', function () {
 
     // Declare variables
-    var post_items, chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetaData, posts, pages, postTemplate, pageTemplate, indexTemplate;
+    var indexContent, post, post_items, chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetaData, posts, pages, postTemplate, pageTemplate, indexTemplate;
 
     // Merge task-specific and/or target-specific options with these defaults.
     options = this.options({
@@ -106,6 +106,34 @@ module.exports = function (grunt) {
     }
 
     // Then, loop through each chunk and write the content to the file
+    for (chunk in postChunks) {
+        indexContent = [];
+
+        // Get the posts
+        for (post in postChunks[chunk]) {
+            // Convert it to Markdown
+            md = new MarkedMetaData(postChunks[chunk][post]);
+            md.defineTokens('---', '---');
+            mdcontent = md.markdown();
+            meta = md.metadata();
+
+            // Get the data
+            data = {
+                data: options.data,
+                meta: {
+                    title: meta.title.replace(/"/g, '')
+                },
+                post: {
+                    content: mdcontent
+                }
+            };
+
+            // Push it to the array
+            indexContent.push(data);
+        }
+
+        // Write the content to the file
+    }
 
     // Iterate over all specified file groups.
     this.files.forEach(function (file) {
