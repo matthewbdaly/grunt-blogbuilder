@@ -132,7 +132,15 @@ module.exports = function (grunt) {
             indexContent.push(data);
         }
 
+        // If this is the first page, also write it as the index
+        if (chunk === "0") {
+            grunt.file.write(options.www.dest + '/index.html', '');
+        }
+
         // Write the content to the file
+        path = options.www.dest + '/posts/' + (Number(chunk) + 1);
+        grunt.file.mkdir(path);
+        grunt.file.write(path + '/index.html', '');
     }
 
     // Iterate over all specified file groups.
