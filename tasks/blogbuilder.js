@@ -16,7 +16,7 @@ module.exports = function (grunt) {
   grunt.registerMultiTask('blogbuilder', 'Grunt plugin for building a blog.', function () {
 
     // Declare variables
-    var newObj, permalink, post, post_items, chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetaData, posts, pages, postTemplate, pageTemplate, indexTemplate;
+    var newObj, permalink, post, post_items, chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetaData, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate;
 
     // Merge task-specific and/or target-specific options with these defaults.
     options = this.options({
@@ -45,6 +45,7 @@ module.exports = function (grunt) {
     postTemplate = Handlebars.compile(grunt.file.read(options.template.post));
     pageTemplate = Handlebars.compile(grunt.file.read(options.template.page));
     indexTemplate = Handlebars.compile(grunt.file.read(options.template.index));
+    archiveTemplate = Handlebars.compile(grunt.file.read(options.template.archive));
 
     // Generate pages
     pages.forEach(function (file) {
