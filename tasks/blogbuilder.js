@@ -121,7 +121,7 @@ module.exports = function (grunt) {
             meta = md.metadata();
 
             // Push it to the array
-            permalink = '/blog/' + postChunks[chunk][post].replace(options.src.posts, '').replace('.md', '');
+            permalink = '/blog/' + postChunks[chunk][post].replace(options.src.posts, '').replace('.md', '') + '/';
             newObj = {
                 meta: {
                     title: meta.title.replace(/"/g, ''),
