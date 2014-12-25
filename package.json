@@ -1,5 +1,5 @@
 {
-  "name": "blogbuilder",
+  "name": "grunt-blogbuilder",
   "version": "0.0.1",
   "description": "Grunt plugin for building a blog.",
   "repository": {
