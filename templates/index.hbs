@@ -1,10 +1,10 @@
 {{> header }}
 
-{{#each all_posts}}
+{{#each posts}}
 <div class="container">
     <article class="post">
-        <h1>{{ meta.title }}</h1>
-        {{{ content }}}
+        <h1>{{ this.meta.title }}</h1>
+        {{{ this.post.content }}}
     </article>
 </div>
 {{/each}}

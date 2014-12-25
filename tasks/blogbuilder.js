@@ -16,7 +16,7 @@ module.exports = function (grunt) {
   grunt.registerMultiTask('blogbuilder', 'Grunt plugin for building a blog.', function () {
 
     // Declare variables
-    var indexContent, post, post_items, chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetaData, posts, pages, postTemplate, pageTemplate, indexTemplate;
+    var newObj, post, post_items, chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetaData, posts, pages, postTemplate, pageTemplate, indexTemplate;
 
     // Merge task-specific and/or target-specific options with these defaults.
     options = this.options({
@@ -107,7 +107,10 @@ module.exports = function (grunt) {
 
     // Then, loop through each chunk and write the content to the file
     for (chunk in postChunks) {
-        indexContent = [];
+        data = {
+            data: options.data,
+            posts: []
+        };
 
         // Get the posts
         for (post in postChunks[chunk]) {
@@ -117,9 +120,8 @@ module.exports = function (grunt) {
             mdcontent = md.markdown();
             meta = md.metadata();
 
-            // Get the data
-            data = {
-                data: options.data,
+            // Push it to the array
+            newObj = {
                 meta: {
                     title: meta.title.replace(/"/g, '')
                 },
@@ -127,20 +129,21 @@ module.exports = function (grunt) {
                     content: mdcontent
                 }
             };
-
-            // Push it to the array
-            indexContent.push(data);
+            data.posts.push(newObj);
         }
+
+        // Generate content
+        output = indexTemplate(data);
 
         // If this is the first page, also write it as the index
         if (chunk === "0") {
-            grunt.file.write(options.www.dest + '/index.html', '');
+            grunt.file.write(options.www.dest + '/index.html', output);
         }
 
         // Write the content to the file
         path = options.www.dest + '/posts/' + (Number(chunk) + 1);
         grunt.file.mkdir(path);
-        grunt.file.write(path + '/index.html', '');
+        grunt.file.write(path + '/index.html', output);
     }
 
     // Iterate over all specified file groups.
