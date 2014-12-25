@@ -16,7 +16,7 @@ module.exports = function (grunt) {
   grunt.registerMultiTask('blogbuilder', 'Grunt plugin for building a blog.', function () {
 
     // Declare variables
-    var newObj, post, post_items, chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetaData, posts, pages, postTemplate, pageTemplate, indexTemplate;
+    var newObj, permalink, post, post_items, chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetaData, posts, pages, postTemplate, pageTemplate, indexTemplate;
 
     // Merge task-specific and/or target-specific options with these defaults.
     options = this.options({
@@ -121,9 +121,11 @@ module.exports = function (grunt) {
             meta = md.metadata();
 
             // Push it to the array
+            permalink = '/blog/' + postChunks[chunk][post].replace(options.src.posts, '').replace('.md', '');
             newObj = {
                 meta: {
-                    title: meta.title.replace(/"/g, '')
+                    title: meta.title.replace(/"/g, ''),
+                    permalink: permalink
                 },
                 post: {
                     content: mdcontent
