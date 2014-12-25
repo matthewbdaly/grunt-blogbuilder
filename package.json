@@ -2,7 +2,10 @@
   "name": "blogbuilder",
   "version": "0.0.1",
   "description": "Grunt plugin for building a blog.",
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:matthewbdaly/grunt-blogbuilder.git"
+  },
   "author": {
     "name": "Matthew Daly",
     "email": "matthewbdaly@gmail.com",
@@ -11,9 +14,15 @@
   "keywords": [
     "gruntplugin"
   ],
+  "files": [
+      "tasks",
+      "templates",
+      "tests",
+      "Gruntfile.js"
+  ],
   "main": "Gruntfile.js",
   "engines": {
-    "node": ">= 0.8.0"
+    "node": ">= 0.10.0"
   },
   "license": "MIT",
   "devDependencies": {
