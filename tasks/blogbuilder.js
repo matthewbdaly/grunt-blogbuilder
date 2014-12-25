@@ -16,7 +16,7 @@ module.exports = function (grunt) {
   grunt.registerMultiTask('blogbuilder', 'Grunt plugin for building a blog.', function () {
 
     // Declare variables
-    var newObj, permalink, post, post_items, chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetaData, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate;
+    var RSS, feed, newObj, permalink, post, post_items, chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetaData, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate;
 
     // Merge task-specific and/or target-specific options with these defaults.
     options = this.options({
@@ -27,6 +27,9 @@ module.exports = function (grunt) {
 
     // Get Handlebars
     Handlebars = require('handlebars');
+
+    // Get RSS
+    RSS = require('rss');
 
     // Register partials
     Handlebars.registerPartial({
@@ -133,6 +136,46 @@ module.exports = function (grunt) {
     path = options.www.dest + '/archive/';
     grunt.file.mkdir(path);
     grunt.file.write(path + '/index.html', output);
+
+    // Generate RSS feed
+    post_items = posts.slice(0, 20);
+    feed = new RSS({
+        title: options.data.title,
+        description: options.data.description
+    });
+
+    // Get the posts
+    for (post in post_items) {
+        // Convert it to Markdown
+        md = new MarkedMetaData(post_items[post]);
+        md.defineTokens('---', '---');
+        mdcontent = md.markdown();
+        meta = md.metadata();
+
+        // Render the Handlebars template with the content
+        permalink = '/blog/' + post_items[post].replace(options.src.posts, '').replace('.md', '') + '/';
+        data = {
+            data: options.data,
+            meta: {
+                title: meta.title.replace(/"/g, ''),
+                permalink: permalink
+            },
+            post: {
+                content: mdcontent
+            }
+        };
+
+        // Add to feed
+        feed.item({
+            title: data.meta.title,
+            description: data.post.content,
+            url: data.meta.permalink
+        });
+    }
+
+    // Write the content to the file
+    path = options.www.dest + '/rss.xml';
+    grunt.file.write(path, feed.xml({indent: true}));
 
     // Generate index
     // First, break it into chunks
