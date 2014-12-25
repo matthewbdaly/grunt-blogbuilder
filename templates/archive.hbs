@@ -1,0 +1,9 @@
+{{> header }}
+
+{{#each posts}}
+<div class="container">
+    <h4><a href="{{ this.meta.permalink }}">{{ this.meta.title }}</a></h4>
+</div>
+{{/each}}
+
+{{> footer }}
