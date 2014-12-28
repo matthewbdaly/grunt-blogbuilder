@@ -22,7 +22,8 @@ module.exports = function (grunt) {
     options = this.options({
       punctuation: '.',
       separator: ', ',
-      size: 5
+      size: 5,
+      year: new Date().getFullYear()
     });
 
     // Get Handlebars
@@ -92,7 +93,8 @@ module.exports = function (grunt) {
             },
             post: {
                 content: mdcontent
-            }
+            },
+            year: options.year
         };
         output = postTemplate(data);
 
