@@ -36,6 +36,10 @@ module.exports = function (grunt) {
       default_options: {
         options: {
           data: {
+            author: "My Name",
+            url: "http://www.example.com",
+            facebookcomments: "",
+            disqus: "",
             title: 'My new blog',
             description: 'A blog'
           },
@@ -62,6 +66,10 @@ module.exports = function (grunt) {
       custom_options: {
         options: {
           data: {
+            author: "My Name",
+            url: "http://www.example.com",
+            facebookcomments: "",
+            disqus: "",
             title: 'My new blog',
             description: 'A blog'
           },
