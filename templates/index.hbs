@@ -1,12 +1,11 @@
 {{> header }}
 
-{{#each posts}}
 <div class="container">
+{{#each posts}}
     <article class="post">
         <h1><a href="{{ this.meta.permalink }}">{{ this.meta.title }}</a></h1>
         {{{ this.post.content }}}
     </article>
-</div>
 {{/each}}
 
  <ul class="pager">
@@ -19,4 +18,5 @@
 {{/if}}
  </ul>
 
+</div>
 {{> footer }}
