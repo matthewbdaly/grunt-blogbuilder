@@ -1,9 +1,37 @@
 {{> header }}
 
 <div class="container">
+
+    <% if(site.facebookcomments) { %>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+    <% } %>
+
     <article class="post">
         <h1>{{ meta.title }}</h1>
         {{{ post.content }}}
+      <section class="comments">
+        <% if(site.disqus) { %>
+          <div id="disqus_thread"></div>
+          <script type="text/javascript">
+            window.disqus_identifier="";
+            window.disqus_url="<%= site.url+"/"+post.htmlPath() %>";
+            window.disqus_title="<%= post.title() %>";
+          </script>
+            <script type="text/javascript" src="http://disqus.com/forums/<%= site.disqus %>/embed.js"></script>
+            <noscript><a href="http://<%= site.disqus %>.disqus.com/?url=ref">View the discussion thread.</a></noscript>
+        <% } %>
+        <% if(site.facebookcomments) { %>
+            <div class="fb-comments" data-href="<%= site.url %>/<%= post.htmlPath() %>" data-width="470" data-num-posts="10"></div>
+            </div>
+        <% } %>
+      </section>
     </article>
 </div>
 
