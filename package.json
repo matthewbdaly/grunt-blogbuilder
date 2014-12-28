@@ -1,6 +1,6 @@
 {
   "name": "grunt-blogbuilder",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Grunt plugin for building a blog.",
   "repository": {
     "type": "git",
@@ -25,7 +25,7 @@
     "node": ">= 0.10.0"
   },
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "grunt": "~0.4.2",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-jshint": "~0.8.0",
