@@ -144,7 +144,8 @@ module.exports = function (grunt) {
     post_items = posts.slice(0, 20);
     feed = new RSS({
         title: options.data.title,
-        description: options.data.description
+        description: options.data.description,
+        url: options.data.url
     });
 
     // Get the posts
@@ -156,7 +157,7 @@ module.exports = function (grunt) {
         meta = md.metadata();
 
         // Render the Handlebars template with the content
-        permalink = '/blog/' + post_items[post].replace(options.src.posts, '').replace('.md', '') + '/';
+        permalink = options.data.url + '/blog/' + post_items[post].replace(options.src.posts, '').replace('.md', '') + '/';
         data = {
             data: options.data,
             meta: {
