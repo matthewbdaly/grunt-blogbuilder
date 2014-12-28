@@ -179,7 +179,7 @@ module.exports = function (grunt) {
 
     // Generate index
     // First, break it into chunks
-    post_items = posts.reverse();
+    post_items = posts;
     while (post_items.length > 0) {
         postChunks.push(post_items.splice(0, options.size));
     }
