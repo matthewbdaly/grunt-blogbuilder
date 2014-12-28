@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta property="fb:app_id" content="<%= site.facebookcomments %>"/>
+        {{#if data.facebookcomments}}<meta property="fb:app_id" content="{{ data.facebookcomments }}"/>
         <link rel="stylesheet" type="text/css" href="/static/bower_components/bootstrap-sass/dist/css/bootstrap.min.css" media="all" />
         <link rel="stylesheet" type="text/css" href="/static/bower_components/flat-ui/dist/css/flat-ui.min.css" media="all" />
         <link rel="stylesheet" type="text/css" href="/static/bower_components/highlightjs/styles/rainbow.css" media="all" />
