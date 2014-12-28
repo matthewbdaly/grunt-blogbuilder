@@ -28,7 +28,7 @@
             <noscript><a href="http://<%= site.disqus %>.disqus.com/?url=ref">View the discussion thread.</a></noscript>
         {{/if}}
         {{#if data.facebookcomments }}
-            <div class="fb-comments" data-href="<%= site.url %>/<%= post.htmlPath() %>" data-width="470" data-num-posts="10"></div>
+        <div class="fb-comments" data-href="{{ data.url }}{{ path }}/" data-width="470" data-num-posts="10"></div>
             </div>
         {{/if}}
       </section>

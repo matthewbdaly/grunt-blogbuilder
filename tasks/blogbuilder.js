@@ -88,6 +88,7 @@ module.exports = function (grunt) {
         // Render the Handlebars template with the content
         data = {
             data: options.data,
+            path: '/blog/' + (file.replace(options.src.posts, '').replace('.md', '')),
             meta: {
                 title: meta.title.replace(/"/g, '')
             },
