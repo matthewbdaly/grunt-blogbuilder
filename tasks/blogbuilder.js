@@ -42,8 +42,8 @@ module.exports = function (grunt) {
     MarkedMetaData = require('marked-metadata');
 
     // Get matching files
-    posts = grunt.file.expand(options.src.posts + '*.md');
-    pages = grunt.file.expand(options.src.pages + '*.md');
+    posts = grunt.file.expand(options.src.posts + '*.md', options.src.posts + '*.markdown');
+    pages = grunt.file.expand(options.src.pages + '*.md', options.src.pages + '*.markdown');
 
     // Get Handlebars templates
     postTemplate = Handlebars.compile(grunt.file.read(options.template.post));
@@ -72,7 +72,7 @@ module.exports = function (grunt) {
         output = pageTemplate(data);
 
         // Write page to destination
-        path = options.www.dest + '/' + (file.replace(options.src.pages, '').replace('.md', ''));
+        path = options.www.dest + '/' + (file.replace(options.src.pages, '').replace('.markdown', '').replace('.md', ''));
         grunt.file.mkdir(path);
         grunt.file.write(path + '/index.html', output);
     });
@@ -88,7 +88,7 @@ module.exports = function (grunt) {
         // Render the Handlebars template with the content
         data = {
             data: options.data,
-            path: '/blog/' + (file.replace(options.src.posts, '').replace('.md', '')),
+            path: '/blog/' + (file.replace(options.src.posts, '').replace('.markdown', '').replace('.md', '')),
             meta: {
                 title: meta.title.replace(/"/g, '')
             },
@@ -100,7 +100,7 @@ module.exports = function (grunt) {
         output = postTemplate(data);
 
         // Write post to destination
-        path = options.www.dest + '/blog/' + (file.replace(options.src.posts, '').replace('.md', ''));
+        path = options.www.dest + '/blog/' + (file.replace(options.src.posts, '').replace('.markdown', '').replace('.md', ''));
         grunt.file.mkdir(path);
         grunt.file.write(path + '/index.html', output);
     });
@@ -121,7 +121,7 @@ module.exports = function (grunt) {
         meta = md.metadata();
 
         // Push it to the array
-        permalink = '/blog/' + post_items[post].replace(options.src.posts, '').replace('.md', '') + '/';
+        permalink = '/blog/' + post_items[post].replace(options.src.posts, '').replace('.md', '').replace('.markdown', '') + '/';
         newObj = {
             meta: {
                 title: meta.title.replace(/"/g, ''),
@@ -157,7 +157,7 @@ module.exports = function (grunt) {
         meta = md.metadata();
 
         // Render the Handlebars template with the content
-        permalink = options.data.url + '/blog/' + post_items[post].replace(options.src.posts, '').replace('.md', '') + '/';
+        permalink = options.data.url + '/blog/' + post_items[post].replace(options.src.posts, '').replace('.markdown', '').replace('.md', '') + '/';
         data = {
             data: options.data,
             meta: {
@@ -204,7 +204,7 @@ module.exports = function (grunt) {
             meta = md.metadata();
 
             // Push it to the array
-            permalink = '/blog/' + postChunks[chunk][post].replace(options.src.posts, '').replace('.md', '') + '/';
+            permalink = '/blog/' + postChunks[chunk][post].replace(options.src.posts, '').replace('.markdown', '').replace('.md', '') + '/';
             newObj = {
                 meta: {
                     title: meta.title.replace(/"/g, ''),
