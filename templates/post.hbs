@@ -13,26 +13,30 @@
         }(document, 'script', 'facebook-jssdk'));</script>
     {{/if}}
 
-    <article class="post">
-        <h1>{{ meta.title }}</h1>
-        {{{ post.content }}}
-      <section class="comments">
-          {{#if data.disqus }}
-          <div id="disqus_thread"></div>
-          <script type="text/javascript">
-            window.disqus_identifier="";
-            window.disqus_url="{{ data.url }}{{ path }}/";
-            window.disqus_title="{{ meta.title }}";
-          </script>
-          <script type="text/javascript" src="http://disqus.com/forums/{{ data.disqus }}/embed.js"></script>
-          <noscript><a href="http://{{ data.disqus }}.disqus.com/?url=ref">View the discussion thread.</a></noscript>
-        {{/if}}
-        {{#if data.facebookcomments }}
-        <div class="fb-comments" data-href="{{ data.url }}{{ path }}/" data-width="470" data-num-posts="10"></div>
-            </div>
-        {{/if}}
-      </section>
-    </article>
+    <div class="row">
+        <div class="col-md-12">
+            <article class="post">
+                <h1>{{ meta.title }}</h1>
+                {{{ post.content }}}
+              <section class="comments">
+                  {{#if data.disqus }}
+                  <div id="disqus_thread"></div>
+                  <script type="text/javascript">
+                    window.disqus_identifier="";
+                    window.disqus_url="{{ data.url }}{{ path }}/";
+                    window.disqus_title="{{ meta.title }}";
+                  </script>
+                  <script type="text/javascript" src="http://disqus.com/forums/{{ data.disqus }}/embed.js"></script>
+                  <noscript><a href="http://{{ data.disqus }}.disqus.com/?url=ref">View the discussion thread.</a></noscript>
+                {{/if}}
+                {{#if data.facebookcomments }}
+                <div class="fb-comments" data-href="{{ data.url }}{{ path }}/" data-width="470" data-num-posts="10"></div>
+                    </div>
+                {{/if}}
+              </section>
+            </article>
+        </div>
+    </div>
 </div>
 
 {{> footer }}

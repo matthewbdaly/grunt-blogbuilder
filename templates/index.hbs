@@ -1,22 +1,28 @@
 {{> header }}
 
 <div class="container">
+    <div class="row">
+        <div class="col-md-12">
 {{#each posts}}
     <article class="post">
         <h1><a href="{{ this.meta.permalink }}">{{ this.meta.title }}</a></h1>
         {{{ this.post.content }}}
     </article>
 {{/each}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+             <ul class="pager">
+            {{#if prevChunk}}
+                <li><a href="/posts/{{ prevChunk }}/">Newer</a></li>
+            {{/if}}
 
- <ul class="pager">
-{{#if prevChunk}}
-    <li><a href="/posts/{{ prevChunk }}/">Newer</a></li>
-{{/if}}
-
-{{#if nextChunk}}
-    <li><a href="/posts/{{ nextChunk }}/">Older</a></li>
-{{/if}}
- </ul>
-
+            {{#if nextChunk}}
+                <li><a href="/posts/{{ nextChunk }}/">Older</a></li>
+            {{/if}}
+             </ul>
+        </div>
+    </div>
 </div>
 {{> footer }}
