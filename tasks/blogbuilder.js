@@ -73,7 +73,6 @@ module.exports = function (grunt) {
 
         // Write page to destination
         path = options.www.dest + '/' + (file.replace(options.src.pages, '').replace(/(\d{4})-(\d{2})-(\d{2})-/, '$1/$2/$3/').replace('.markdown', '').replace('.md', ''));
-        grunt.log.writeln(path);
         grunt.file.mkdir(path);
         grunt.file.write(path + '/index.html', output);
     });
