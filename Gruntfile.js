@@ -62,39 +62,6 @@ module.exports = function (grunt) {
         files: {
           'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123']
         }
-      },
-      custom_options: {
-        options: {
-          data: {
-            author: "My Name",
-            url: "http://www.example.com",
-            facebookcomments: "",
-            disqus: "",
-            title: 'My new blog',
-            description: 'A blog'
-          },
-          template: {
-            post: 'templates/post.hbs',
-            page: 'templates/page.hbs',
-            index: 'templates/index.hbs',
-            header: 'templates/partials/header.hbs',
-            footer: 'templates/partials/footer.hbs',
-            archive: 'templates/archive.hbs'
-          },
-          src: {
-            posts: 'content/posts/',
-            pages: 'content/pages/'
-          },
-          separator: ': ',
-          punctuation: ' !!!',
-          size: 5,
-          www: {
-            dest: 'build'
-          }
-        },
-        files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123']
-        }
       }
     },
 
