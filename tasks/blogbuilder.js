@@ -16,7 +16,7 @@ module.exports = function (grunt) {
   grunt.registerMultiTask('blogbuilder', 'Grunt plugin for building a blog.', function () {
 
     // Declare variables
-    var RSS, feed, newObj, permalink, post, post_items, chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetaData, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate;
+    var RSS, feed, newObj, permalink, post, post_items, chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, marked, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate;
 
     // Merge task-specific and/or target-specific options with these defaults.
     options = this.options({
@@ -39,7 +39,7 @@ module.exports = function (grunt) {
     });
 
     // Get Marked Metadata
-    MarkedMetaData = require('marked-metadata');
+    marked = require('marked-metadata');
 
     // Get matching files
     posts = grunt.file.expand(options.src.posts + '*.md', options.src.posts + '*.markdown');
@@ -54,7 +54,7 @@ module.exports = function (grunt) {
     // Generate pages
     pages.forEach(function (file) {
         // Convert it to Markdown
-        md = new MarkedMetaData(file);
+        md = new marked(file);
         md.defineTokens('---', '---');
         mdcontent = md.markdown();
         meta = md.metadata();
@@ -80,7 +80,7 @@ module.exports = function (grunt) {
     // Generate posts
     posts.forEach(function (file) {
         // Convert it to Markdown
-        md = new MarkedMetaData(file);
+        md = new marked(file);
         md.defineTokens('---', '---');
         mdcontent = md.markdown();
         meta = md.metadata();
@@ -115,7 +115,7 @@ module.exports = function (grunt) {
     // Get the posts
     for (post in post_items) {
         // Convert it to Markdown
-        md = new MarkedMetaData(post_items[post]);
+        md = new marked(post_items[post]);
         md.defineTokens('---', '---');
         mdcontent = md.markdown();
         meta = md.metadata();
@@ -151,7 +151,7 @@ module.exports = function (grunt) {
     // Get the posts
     for (post in post_items) {
         // Convert it to Markdown
-        md = new MarkedMetaData(post_items[post]);
+        md = new marked(post_items[post]);
         md.defineTokens('---', '---');
         mdcontent = md.markdown();
         meta = md.metadata();
@@ -198,7 +198,7 @@ module.exports = function (grunt) {
         // Get the posts
         for (post in postChunks[chunk]) {
             // Convert it to Markdown
-            md = new MarkedMetaData(postChunks[chunk][post]);
+            md = new marked(postChunks[chunk][post]);
             md.defineTokens('---', '---');
             mdcontent = md.markdown();
             meta = md.metadata();
