@@ -16,7 +16,7 @@ module.exports = function (grunt) {
   grunt.registerMultiTask('blogbuilder', 'Grunt plugin for building a blog.', function () {
 
     // Declare variables
-    var RSS, feed, newObj, permalink, post, post_items, chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate;
+    var RSS, feed, newObj, permalink, post, post_items, chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate, notFoundTemplate;
 
     // Merge task-specific and/or target-specific options with these defaults.
     options = this.options({
@@ -50,6 +50,7 @@ module.exports = function (grunt) {
     pageTemplate = Handlebars.compile(grunt.file.read(options.template.page));
     indexTemplate = Handlebars.compile(grunt.file.read(options.template.index));
     archiveTemplate = Handlebars.compile(grunt.file.read(options.template.archive));
+    notFoundTemplate = Handlebars.compile(grunt.file.read(options.template.notfound));
 
     // Generate pages
     pages.forEach(function (file) {
@@ -236,6 +237,16 @@ module.exports = function (grunt) {
         grunt.file.mkdir(path);
         grunt.file.write(path + '/index.html', output);
     }
+
+    // Create 404 page
+    newObj = {
+        data: options.data
+    };
+
+    output = notFoundTemplate(newObj);
+    path = options.www.dest;
+    grunt.file.mkdir(path);
+    grunt.file.write(path + '/404.html', output);
 
     // Iterate over all specified file groups.
     this.files.forEach(function (file) {

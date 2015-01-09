@@ -49,7 +49,8 @@ module.exports = function (grunt) {
             index: 'templates/index.hbs',
             header: 'templates/partials/header.hbs',
             footer: 'templates/partials/footer.hbs',
-            archive: 'templates/archive.hbs'
+            archive: 'templates/archive.hbs',
+            notfound: 'templates/404.hbs'
           },
           src: {
             posts: 'content/posts/',
