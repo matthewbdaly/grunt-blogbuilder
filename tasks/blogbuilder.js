@@ -248,6 +248,9 @@ module.exports = function (grunt) {
     grunt.file.mkdir(path);
     grunt.file.write(path + '/404.html', output);
 
+    // Create robots.txt file
+    grunt.file.write(options.www.dest + '/robots.txt', 'User-agent: *\nDisallow:');
+
     // Iterate over all specified file groups.
     this.files.forEach(function (file) {
       // Concat specified files.
