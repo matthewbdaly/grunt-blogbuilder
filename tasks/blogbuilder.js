@@ -163,7 +163,8 @@ module.exports = function (grunt) {
             data: options.data,
             meta: {
                 title: meta.title.replace(/"/g, ''),
-                permalink: permalink
+                permalink: permalink,
+                date: meta.date
             },
             post: {
                 content: mdcontent
@@ -174,7 +175,8 @@ module.exports = function (grunt) {
         feed.item({
             title: data.meta.title,
             description: data.post.content,
-            url: data.meta.permalink
+            url: data.meta.permalink,
+            date: data.meta.date
         });
     }
 
