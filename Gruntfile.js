@@ -38,6 +38,7 @@ module.exports = function (grunt) {
           data: {
             author: "My Name",
             url: "http://www.example.com",
+            googleanalytics: "UA-XXXXX-X",
             facebookcomments: "",
             disqus: "",
             title: 'My new blog',
