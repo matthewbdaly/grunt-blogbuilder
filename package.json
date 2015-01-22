@@ -15,10 +15,10 @@
     "gruntplugin"
   ],
   "files": [
-      "tasks",
-      "templates",
-      "tests",
-      "Gruntfile.js"
+    "tasks",
+    "templates",
+    "tests",
+    "Gruntfile.js"
   ],
   "main": "Gruntfile.js",
   "engines": {
@@ -33,7 +33,7 @@
     "handlebars": "^2.0.0",
     "jshint-stylish": "~0.1.5",
     "load-grunt-tasks": "~0.3.0",
-    "marked-metadata-with-options": "0.0.1",
+    "meta-marked": "^0.3.3",
     "rss": "^1.1.1"
   },
   "scripts": {
