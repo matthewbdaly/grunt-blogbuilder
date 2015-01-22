@@ -16,7 +16,7 @@ module.exports = function (grunt) {
   grunt.registerMultiTask('blogbuilder', 'Grunt plugin for building a blog.', function () {
 
     // Declare variables
-    var RSS, feed, newObj, permalink, post, post_items, chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate, notFoundTemplate;
+    var content, RSS, feed, newObj, permalink, post, post_items, chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate, notFoundTemplate;
 
     // Merge task-specific and/or target-specific options with these defaults.
     options = this.options({
@@ -60,7 +60,8 @@ module.exports = function (grunt) {
     // Generate pages
     pages.forEach(function (file) {
         // Convert it to Markdown
-        md = new MarkedMetadata(file);
+        content = grunt.file.read(file);
+        md = new MarkedMetadata(content);
         mdcontent = md.html;
         meta = md.meta;
 
@@ -85,7 +86,8 @@ module.exports = function (grunt) {
     // Generate posts
     posts.forEach(function (file) {
         // Convert it to Markdown
-        md = new MarkedMetadata(file);
+        content = grunt.file.read(file);
+        md = new MarkedMetadata(content);
         mdcontent = md.html;
         meta = md.meta;
 
@@ -119,7 +121,8 @@ module.exports = function (grunt) {
     // Get the posts
     for (post in post_items) {
         // Convert it to Markdown
-        md = new MarkedMetadata(post_items[post]);
+        content = grunt.file.read(post_items[post]);
+        md = new MarkedMetadata(content);
         mdcontent = md.html;
         meta = md.meta;
 
@@ -154,7 +157,8 @@ module.exports = function (grunt) {
     // Get the posts
     for (post in post_items) {
         // Convert it to Markdown
-        md = new MarkedMetadata(post_items[post]);
+        content = grunt.file.read(post_items[post]);
+        md = new MarkedMetadata(content);
         mdcontent = md.html;
         meta = md.meta;
 
@@ -202,7 +206,8 @@ module.exports = function (grunt) {
         // Get the posts
         for (post in postChunks[chunk]) {
             // Convert it to Markdown
-            md = new MarkedMetadata(postChunks[chunk][post]);
+            content = grunt.file.read(postChunks[chunk][post]);
+            md = new MarkedMetadata(content);
             mdcontent = md.html;
             meta = md.meta;
 
