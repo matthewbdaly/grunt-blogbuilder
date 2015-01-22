@@ -61,8 +61,8 @@ module.exports = function (grunt) {
     pages.forEach(function (file) {
         // Convert it to Markdown
         md = new MarkedMetadata(file);
-        mdcontent = md.markdown();
-        meta = md.metadata();
+        mdcontent = md.html;
+        meta = md.meta;
 
         // Render the Handlebars template with the content
         data = {
@@ -86,8 +86,8 @@ module.exports = function (grunt) {
     posts.forEach(function (file) {
         // Convert it to Markdown
         md = new MarkedMetadata(file);
-        mdcontent = md.markdown();
-        meta = md.metadata();
+        mdcontent = md.html;
+        meta = md.meta;
 
         // Render the Handlebars template with the content
         data = {
@@ -120,8 +120,8 @@ module.exports = function (grunt) {
     for (post in post_items) {
         // Convert it to Markdown
         md = new MarkedMetadata(post_items[post]);
-        mdcontent = md.markdown();
-        meta = md.metadata();
+        mdcontent = md.html;
+        meta = md.meta;
 
         // Push it to the array
         permalink = '/blog/' + post_items[post].replace(options.src.posts, '').replace(/(\d{4})-(\d{2})-(\d{2})-/, '$1/$2/$3/').replace('.md', '').replace('.markdown', '') + '/';
@@ -155,8 +155,8 @@ module.exports = function (grunt) {
     for (post in post_items) {
         // Convert it to Markdown
         md = new MarkedMetadata(post_items[post]);
-        mdcontent = md.markdown();
-        meta = md.metadata();
+        mdcontent = md.html;
+        meta = md.meta;
 
         // Render the Handlebars template with the content
         permalink = options.data.url + '/blog/' + post_items[post].replace(options.src.posts, '').replace(/(\d{4})-(\d{2})-(\d{2})-/, '$1/$2/$3/').replace('.markdown', '').replace('.md', '') + '/';
@@ -203,8 +203,8 @@ module.exports = function (grunt) {
         for (post in postChunks[chunk]) {
             // Convert it to Markdown
             md = new MarkedMetadata(postChunks[chunk][post]);
-            mdcontent = md.markdown();
-            meta = md.metadata();
+            mdcontent = md.html;
+            meta = md.meta;
 
             // Push it to the array
             permalink = '/blog/' + postChunks[chunk][post].replace(options.src.posts, '').replace(/(\d{4})-(\d{2})-(\d{2})-/, '$1/$2/$3/').replace('.markdown', '').replace('.md', '') + '/';
