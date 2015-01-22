@@ -39,7 +39,12 @@ module.exports = function (grunt) {
     });
 
     // Get Marked Metadata
-    MarkedMetadata = require('marked-metadata-with-options');
+    MarkedMetadata = require('meta-marked');
+    MarkedMetadata.setOptions({
+        gfm: true,
+        smartLists: true,
+        smartypants: true
+    });
 
     // Get matching files
     posts = grunt.file.expand(options.src.posts + '*.md', options.src.posts + '*.markdown');
@@ -56,12 +61,6 @@ module.exports = function (grunt) {
     pages.forEach(function (file) {
         // Convert it to Markdown
         md = new MarkedMetadata(file);
-        md.setOptions({
-            gfm: true,
-            smartLists: true,
-            smartypants: true
-        });
-        md.defineTokens('---', '---');
         mdcontent = md.markdown();
         meta = md.metadata();
 
@@ -87,12 +86,6 @@ module.exports = function (grunt) {
     posts.forEach(function (file) {
         // Convert it to Markdown
         md = new MarkedMetadata(file);
-        md.setOptions({
-            gfm: true,
-            smartLists: true,
-            smartypants: true
-        });
-        md.defineTokens('---', '---');
         mdcontent = md.markdown();
         meta = md.metadata();
 
@@ -127,12 +120,6 @@ module.exports = function (grunt) {
     for (post in post_items) {
         // Convert it to Markdown
         md = new MarkedMetadata(post_items[post]);
-        md.setOptions({
-            gfm: true,
-            smartLists: true,
-            smartypants: true
-        });
-        md.defineTokens('---', '---');
         mdcontent = md.markdown();
         meta = md.metadata();
 
@@ -168,12 +155,6 @@ module.exports = function (grunt) {
     for (post in post_items) {
         // Convert it to Markdown
         md = new MarkedMetadata(post_items[post]);
-        md.setOptions({
-            gfm: true,
-            smartLists: true,
-            smartypants: true
-        });
-        md.defineTokens('---', '---');
         mdcontent = md.markdown();
         meta = md.metadata();
 
@@ -222,12 +203,6 @@ module.exports = function (grunt) {
         for (post in postChunks[chunk]) {
             // Convert it to Markdown
             md = new MarkedMetadata(postChunks[chunk][post]);
-            md.setOptions({
-                gfm: true,
-                smartLists: true,
-                smartypants: true
-            });
-            md.defineTokens('---', '---');
             mdcontent = md.markdown();
             meta = md.metadata();
 
