@@ -1,6 +1,6 @@
 {
   "name": "grunt-blogbuilder",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "description": "Grunt plugin for building a blog.",
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "grunt-contrib-jshint": "~0.8.0",
     "grunt-contrib-nodeunit": "~0.3.0",
     "handlebars": "^2.0.0",
+    "highlight.js": "^8.4.0",
     "jshint-stylish": "~0.1.5",
     "load-grunt-tasks": "~0.3.0",
     "meta-marked": "^0.3.3",

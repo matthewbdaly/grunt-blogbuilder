@@ -43,7 +43,10 @@ module.exports = function (grunt) {
     MarkedMetadata.setOptions({
         gfm: true,
         smartLists: true,
-        smartypants: true
+        smartypants: true,
+        highlight: function (code) {
+            return require('highlight.js').highlightAuto(code).value;
+        }
     });
 
     // Get matching files
