@@ -42,6 +42,7 @@ module.exports = function (grunt) {
     MarkedMetadata = require('meta-marked');
     MarkedMetadata.setOptions({
         gfm: true,
+        tables: true,
         smartLists: true,
         smartypants: true,
         highlight: function (code) {
