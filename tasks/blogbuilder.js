@@ -190,7 +190,7 @@ module.exports = function (grunt) {
     }
 
     // Write the content to the file
-    path = options.www.dest + '/rss.xml';
+    path = options.www.dest + '/atom.xml';
     grunt.file.write(path, feed.xml({indent: true}));
 
     // Generate index
