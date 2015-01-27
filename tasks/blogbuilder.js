@@ -146,7 +146,7 @@ module.exports = function (grunt) {
     output = archiveTemplate(data);
 
     // Write the content to the file
-    path = options.www.dest + '/archive/';
+    path = options.www.dest + '/blog/archives/';
     grunt.file.mkdir(path);
     grunt.file.write(path + '/index.html', output);
 
