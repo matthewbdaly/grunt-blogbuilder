@@ -16,7 +16,7 @@ module.exports = function (grunt) {
   grunt.registerMultiTask('blogbuilder', 'Grunt plugin for building a blog.', function () {
 
     // Declare variables
-    var content, RSS, feed, newObj, permalink, post, post_items, chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate, notFoundTemplate;
+    var langs, hljs, content, RSS, feed, newObj, permalink, post, post_items, chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate, notFoundTemplate;
 
     // Merge task-specific and/or target-specific options with these defaults.
     options = this.options({
@@ -32,6 +32,12 @@ module.exports = function (grunt) {
     // Get RSS
     RSS = require('rss');
 
+    // Get Highlight.js
+    hljs = require('highlight.js');
+
+    // Get languages
+    langs = hljs.listLanguages();
+
     // Register partials
     Handlebars.registerPartial({
         header: grunt.file.read(options.template.header),
@@ -45,8 +51,12 @@ module.exports = function (grunt) {
         tables: true,
         smartLists: true,
         smartypants: true,
-        highlight: function (code) {
-            return require('highlight.js').highlightAuto(code).value;
+        highlight: function (code, lang) {
+            if (typeof lang !== "undefined" && langs.indexOf(lang) > 0) {
+                return hljs.highlight(lang, code).value;
+            } else {
+                return hljs.highlightAuto(code).value;
+            }
         }
     });
 
