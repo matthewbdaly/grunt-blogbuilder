@@ -51,6 +51,7 @@ module.exports = function (grunt) {
         tables: true,
         smartLists: true,
         smartypants: true,
+        langPrefix: 'hljs lang-',
         highlight: function (code, lang) {
             if (typeof lang !== "undefined" && langs.indexOf(lang) > 0) {
                 return hljs.highlight(lang, code).value;
