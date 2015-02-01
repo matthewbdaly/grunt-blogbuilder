@@ -16,7 +16,7 @@ module.exports = function (grunt) {
   grunt.registerMultiTask('blogbuilder', 'Grunt plugin for building a blog.', function () {
 
     // Declare variables
-    var langs, hljs, content, RSS, feed, newObj, permalink, post, post_items, chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate, notFoundTemplate;
+    var langs, hljs, content, RSS, feed, newObj, post, post_items, chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate, notFoundTemplate;
 
     // Merge task-specific and/or target-specific options with these defaults.
     options = this.options({
@@ -93,7 +93,7 @@ module.exports = function (grunt) {
         output = pageTemplate(data);
 
         // Write page to destination
-        path = options.www.dest + '/' + (file.replace(options.src.pages, '').replace(/(\d{4})-(\d{2})-(\d{2})-/, '$1/$2/$3/').replace('.markdown', '').replace('.md', ''));
+        path = options.www.dest + '/' + (file.replace(options.src.pages, '').replace('.markdown', '').replace('.md', ''));
         grunt.file.mkdir(path);
         grunt.file.write(path + '/index.html', output);
     });
@@ -106,10 +106,13 @@ module.exports = function (grunt) {
         mdcontent = md.html;
         meta = md.meta;
 
+        // Get path
+        path = options.www.dest + '/blog/' + (file.replace(options.src.posts, '').replace(/(\d{4})-(\d{2})-(\d{2})-/, '$1/$2/$3/').replace('.markdown', '').replace('.md', ''));
+
         // Render the Handlebars template with the content
         data = {
             data: options.data,
-            path: '/blog/' + (file.replace(options.src.posts, '').replace(/(\d{4})-(\d{2})-(\d{2})-/, '$1/$2/$3/').replace('.markdown', '').replace('.md', '')),
+            path: path,
             meta: {
                 title: meta.title.replace(/"/g, '')
             },
@@ -121,7 +124,6 @@ module.exports = function (grunt) {
         output = postTemplate(data);
 
         // Write post to destination
-        path = options.www.dest + '/blog/' + (file.replace(options.src.posts, '').replace(/(\d{4})-(\d{2})-(\d{2})-/, '$1/$2/$3/').replace('.markdown', '').replace('.md', ''));
         grunt.file.mkdir(path);
         grunt.file.write(path + '/index.html', output);
     });
@@ -142,11 +144,11 @@ module.exports = function (grunt) {
         meta = md.meta;
 
         // Push it to the array
-        permalink = '/blog/' + post_items[post].replace(options.src.posts, '').replace(/(\d{4})-(\d{2})-(\d{2})-/, '$1/$2/$3/').replace('.md', '').replace('.markdown', '') + '/';
+        path = '/blog/' + post_items[post].replace(options.src.posts, '').replace(/(\d{4})-(\d{2})-(\d{2})-/, '$1/$2/$3/').replace('.md', '').replace('.markdown', '') + '/';
         newObj = {
             meta: {
                 title: meta.title.replace(/"/g, ''),
-                permalink: permalink
+                permalink: path
             },
             post: {
                 content: mdcontent
@@ -178,12 +180,12 @@ module.exports = function (grunt) {
         meta = md.meta;
 
         // Render the Handlebars template with the content
-        permalink = options.data.url + '/blog/' + post_items[post].replace(options.src.posts, '').replace(/(\d{4})-(\d{2})-(\d{2})-/, '$1/$2/$3/').replace('.markdown', '').replace('.md', '') + '/';
+        path = options.data.url + '/blog/' + post_items[post].replace(options.src.posts, '').replace(/(\d{4})-(\d{2})-(\d{2})-/, '$1/$2/$3/').replace('.markdown', '').replace('.md', '') + '/';
         data = {
             data: options.data,
             meta: {
                 title: meta.title.replace(/"/g, ''),
-                permalink: permalink,
+                permalink: path,
                 date: meta.date
             },
             post: {
@@ -227,11 +229,11 @@ module.exports = function (grunt) {
             meta = md.meta;
 
             // Push it to the array
-            permalink = '/blog/' + postChunks[chunk][post].replace(options.src.posts, '').replace(/(\d{4})-(\d{2})-(\d{2})-/, '$1/$2/$3/').replace('.markdown', '').replace('.md', '') + '/';
+            path = '/blog/' + postChunks[chunk][post].replace(options.src.posts, '').replace(/(\d{4})-(\d{2})-(\d{2})-/, '$1/$2/$3/').replace('.markdown', '').replace('.md', '') + '/';
             newObj = {
                 meta: {
                     title: meta.title.replace(/"/g, ''),
-                    permalink: permalink
+                    permalink: path
                 },
                 post: {
                     content: mdcontent
