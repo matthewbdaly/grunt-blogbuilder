@@ -16,7 +16,7 @@ module.exports = function (grunt) {
   grunt.registerMultiTask('blogbuilder', 'Grunt plugin for building a blog.', function () {
 
     // Declare variables
-    var langs, hljs, content, RSS, feed, newObj, post, post_items, chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate, notFoundTemplate;
+    var langs, hljs, content, RSS, feed, newObj, post, post_items = [], chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate, notFoundTemplate, permalink;
 
     // Merge task-specific and/or target-specific options with these defaults.
     options = this.options({
@@ -79,12 +79,15 @@ module.exports = function (grunt) {
         md = new MarkedMetadata(content);
         mdcontent = md.html;
         meta = md.meta;
+        path = options.www.dest + '/' + (file.replace(options.src.pages, '').replace('.markdown', '').replace('.md', ''));
 
         // Render the Handlebars template with the content
         data = {
             data: options.data,
+            path: path,
             meta: {
-                title: meta.title.replace(/"/g, '')
+                title: meta.title.replace(/"/g, ''),
+                date: meta.date
             },
             post: {
                 content: mdcontent
@@ -93,7 +96,6 @@ module.exports = function (grunt) {
         output = pageTemplate(data);
 
         // Write page to destination
-        path = options.www.dest + '/' + (file.replace(options.src.pages, '').replace('.markdown', '').replace('.md', ''));
         grunt.file.mkdir(path);
         grunt.file.write(path + '/index.html', output);
     });
@@ -107,20 +109,23 @@ module.exports = function (grunt) {
         meta = md.meta;
 
         // Get path
-        path = options.www.dest + '/blog/' + (file.replace(options.src.posts, '').replace(/(\d{4})-(\d{2})-(\d{2})-/, '$1/$2/$3/').replace('.markdown', '').replace('.md', ''));
+        permalink = '/blog/' + (file.replace(options.src.posts, '').replace(/(\d{4})-(\d{2})-(\d{2})-/, '$1/$2/$3/').replace('.markdown', '').replace('.md', ''));
+        path = options.www.dest + permalink;
 
         // Render the Handlebars template with the content
         data = {
             data: options.data,
-            path: path,
+            path: permalink + '/',
             meta: {
-                title: meta.title.replace(/"/g, '')
+                title: meta.title.replace(/"/g, ''),
+                date: meta.date
             },
             post: {
                 content: mdcontent
             },
             year: options.year
         };
+        post_items.push(data);
         output = postTemplate(data);
 
         // Write post to destination
@@ -129,7 +134,7 @@ module.exports = function (grunt) {
     });
 
     // Generate archive
-    post_items = posts.reverse();
+    post_items = post_items.reverse();
     data = {
         data: options.data,
         posts: []
@@ -137,24 +142,8 @@ module.exports = function (grunt) {
 
     // Get the posts
     for (post in post_items) {
-        // Convert it to Markdown
-        content = grunt.file.read(post_items[post]);
-        md = new MarkedMetadata(content);
-        mdcontent = md.html;
-        meta = md.meta;
-
         // Push it to the array
-        path = '/blog/' + post_items[post].replace(options.src.posts, '').replace(/(\d{4})-(\d{2})-(\d{2})-/, '$1/$2/$3/').replace('.md', '').replace('.markdown', '') + '/';
-        newObj = {
-            meta: {
-                title: meta.title.replace(/"/g, ''),
-                permalink: path
-            },
-            post: {
-                content: mdcontent
-            }
-        };
-        data.posts.push(newObj);
+        data.posts.push(post_items[post]);
     }
     output = archiveTemplate(data);
 
@@ -164,7 +153,6 @@ module.exports = function (grunt) {
     grunt.file.write(path + '/index.html', output);
 
     // Generate RSS feed
-    post_items = posts.slice(0, 20);
     feed = new RSS({
         title: options.data.title,
         description: options.data.description,
@@ -172,33 +160,13 @@ module.exports = function (grunt) {
     });
 
     // Get the posts
-    for (post in post_items) {
-        // Convert it to Markdown
-        content = grunt.file.read(post_items[post]);
-        md = new MarkedMetadata(content);
-        mdcontent = md.html;
-        meta = md.meta;
-
-        // Render the Handlebars template with the content
-        path = options.data.url + '/blog/' + post_items[post].replace(options.src.posts, '').replace(/(\d{4})-(\d{2})-(\d{2})-/, '$1/$2/$3/').replace('.markdown', '').replace('.md', '') + '/';
-        data = {
-            data: options.data,
-            meta: {
-                title: meta.title.replace(/"/g, ''),
-                permalink: path,
-                date: meta.date
-            },
-            post: {
-                content: mdcontent
-            }
-        };
-
+    for (post in post_items.slice(0, 20)) {
         // Add to feed
         feed.item({
-            title: data.meta.title,
-            description: data.post.content,
-            url: data.meta.permalink,
-            date: data.meta.date
+            title: post_items[post].meta.title,
+            description: post_items[post].post.content,
+            url: options.data.url + post_items[post].path,
+            date: post_items[post].meta.date
         });
     }
 
@@ -208,7 +176,6 @@ module.exports = function (grunt) {
 
     // Generate index
     // First, break it into chunks
-    post_items = posts;
     while (post_items.length > 0) {
         postChunks.push(post_items.splice(0, options.size));
     }
@@ -222,24 +189,7 @@ module.exports = function (grunt) {
 
         // Get the posts
         for (post in postChunks[chunk]) {
-            // Convert it to Markdown
-            content = grunt.file.read(postChunks[chunk][post]);
-            md = new MarkedMetadata(content);
-            mdcontent = md.html;
-            meta = md.meta;
-
-            // Push it to the array
-            path = '/blog/' + postChunks[chunk][post].replace(options.src.posts, '').replace(/(\d{4})-(\d{2})-(\d{2})-/, '$1/$2/$3/').replace('.markdown', '').replace('.md', '') + '/';
-            newObj = {
-                meta: {
-                    title: meta.title.replace(/"/g, ''),
-                    permalink: path
-                },
-                post: {
-                    content: mdcontent
-                }
-            };
-            data.posts.push(newObj);
+            data.posts.push(postChunks[chunk][post]);
         }
 
         // Generate content
