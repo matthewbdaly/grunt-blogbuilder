@@ -175,6 +175,11 @@ module.exports = function (grunt) {
     path = options.www.dest + '/atom.xml';
     grunt.file.write(path, feed.xml({indent: true}));
 
+    // Create categories
+    _.each(post_items, function (element, index, list) {
+        console.log(element);
+    });
+
     // Generate index
     // First, break it into chunks
     while (post_items.length > 0) {
@@ -212,9 +217,6 @@ module.exports = function (grunt) {
         grunt.file.mkdir(path);
         grunt.file.write(path + '/index.html', output);
     }
-
-    // Create categories
-
 
     // Create 404 page
     newObj = {
