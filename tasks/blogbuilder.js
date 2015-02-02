@@ -118,7 +118,8 @@ module.exports = function (grunt) {
             path: permalink + '/',
             meta: {
                 title: meta.title.replace(/"/g, ''),
-                date: meta.date
+                date: meta.date,
+                categories: meta.categories
             },
             post: {
                 content: mdcontent
@@ -211,6 +212,9 @@ module.exports = function (grunt) {
         grunt.file.mkdir(path);
         grunt.file.write(path + '/index.html', output);
     }
+
+    // Create categories
+
 
     // Create 404 page
     newObj = {
