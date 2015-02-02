@@ -188,6 +188,25 @@ module.exports = function (grunt) {
         }
     });
 
+    // Generate pages for categories
+    _.each(categories, function (element, index, list) {
+        // Loop through the categories and write them to the template
+        var category_posts = [];
+        for (var category_post in element) {
+            category_posts.push(category_post);
+        }
+        var data = {
+            data: options.data,
+            posts: category_post
+        };
+        output = archiveTemplate(data);
+
+        // Write the content to the file
+        path = options.www.dest + '/blog/categories/' + index.replace(/\./g, '-') + '/';
+        grunt.file.mkdir(path);
+        grunt.file.write(path + '/index.html', output);
+    });
+
     // Generate index
     // First, break it into chunks
     while (post_items.length > 0) {
