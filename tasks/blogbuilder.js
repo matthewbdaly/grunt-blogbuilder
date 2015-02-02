@@ -193,16 +193,16 @@ module.exports = function (grunt) {
         // Loop through the categories and write them to the template
         var category_posts = [];
         for (var category_post in element) {
-            category_posts.push(category_post);
+            category_posts.push(element[category_post]);
         }
         var data = {
             data: options.data,
-            posts: category_post
+            posts: category_posts
         };
         output = archiveTemplate(data);
 
         // Write the content to the file
-        path = options.www.dest + '/blog/categories/' + index.replace(/\./g, '-') + '/';
+        path = options.www.dest + '/blog/categories/' + index.toLowerCase().replace(/\./g, '-') + '/';
         grunt.file.mkdir(path);
         grunt.file.write(path + '/index.html', output);
     });
