@@ -135,7 +135,9 @@ module.exports = function (grunt) {
     });
 
     // Generate archive
-    post_items = post_items.reverse();
+    post_items = _.sortBy(post_items, function (item) {
+        return item.meta.date;
+    }).reverse();
     data = {
         data: options.data,
         posts: []
