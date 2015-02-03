@@ -127,23 +127,43 @@ module.exports = function (grunt) {
             year: options.year
         };
         post_items.push(data);
+    });
+
+    // Output them
+    post_items = _.sortBy(post_items, function (item) {
+        return item.meta.date;
+    });
+    post_items.forEach(function (data, index, list) {
+        // Get next and previous
+        if (index < (list.length - 1)) {
+            data.next = {
+                title: list[index + 1].meta.title,
+                path: list[index + 1].path
+            };
+        }
+        if (index > 0) {
+            data.prev = {
+                title: list[index - 1].meta.title,
+                path: list[index - 1].path
+            };
+        }
+
+        // Render template
         output = postTemplate(data);
 
         // Write post to destination
-        grunt.file.mkdir(path);
-        grunt.file.write(path + '/index.html', output);
+        grunt.file.mkdir(options.www.dest + data.path);
+        grunt.file.write(options.www.dest + data.path + '/index.html', output);
     });
 
     // Generate archive
-    post_items = _.sortBy(post_items, function (item) {
-        return item.meta.date;
-    }).reverse();
     data = {
         data: options.data,
         posts: []
     };
 
     // Get the posts
+    post_items = post_items.reverse();
     for (post in post_items) {
         // Push it to the array
         data.posts.push(post_items[post]);

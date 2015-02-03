@@ -37,6 +37,17 @@
             </article>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            {{#if next}}
+            <a href="{{ next.path }}">{{ next.title }}</a>
+            {{/if}}
+            {{#if prev}}
+            <a href="{{ prev.path }}">{{ prev.title }}</a>
+            {{/if}}
+        </div>
+    </div>
 </div>
 
 {{> footer }}
