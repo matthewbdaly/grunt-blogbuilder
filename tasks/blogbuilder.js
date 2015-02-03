@@ -209,6 +209,42 @@ module.exports = function (grunt) {
         grunt.file.write(path + '/index.html', output);
     });
 
+    // Generate RSS feeds for categories
+    _.each(categories, function (element, index, list) {
+        // Loop through the categories and write them to the template
+        var category_posts = [];
+        for (var category_post in element) {
+            category_posts.push(element[category_post]);
+        }
+
+        // Create the feed
+        feed = new RSS({
+            title: index + ' | ' + options.data.title,
+            description: index + ' | ' + options.data.description,
+            url: options.data.url + '/blog/categories/' + index.toLowerCase().replace(/\./g, '-') + '/'
+        });
+
+        // Get the posts
+        for (var post in category_posts) {
+            // Add to feed
+            feed.item({
+                title: category_posts[post].meta.title,
+                description: category_posts[post].post.content,
+                url: options.data.url + category_posts[post].path,
+                date: category_posts[post].meta.date
+            });
+
+            // Write it
+            path = options.www.dest + '/blog/categories/' + index.toLowerCase().replace(/\./g, '-') + '/atom.xml';
+            grunt.file.write(path, feed.xml({indent: true}));
+        }
+
+        // Write the content to the file
+        path = options.www.dest + '/blog/categories/' + index.toLowerCase().replace(/\./g, '-') + '/';
+        grunt.file.mkdir(path);
+        grunt.file.write(path + '/index.html', output);
+    });
+
     // Generate index
     // First, break it into chunks
     while (post_items.length > 0) {
