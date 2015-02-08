@@ -16,7 +16,7 @@ module.exports = function (grunt) {
   grunt.registerMultiTask('blogbuilder', 'Grunt plugin for building a blog.', function () {
 
     // Declare variables
-    var _ = require('lodash'), recent_posts, categories, category, langs, hljs, content, RSS, feed, newObj, post, post_items = [], chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate, notFoundTemplate, permalink;
+    var _ = require('lodash'), moment = require('moment'), recent_posts, categories, category, langs, hljs, content, RSS, feed, newObj, post, post_items = [], chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate, notFoundTemplate, permalink;
 
     // Merge task-specific and/or target-specific options with these defaults.
     options = this.options({
@@ -92,6 +92,7 @@ module.exports = function (grunt) {
             meta: {
                 title: meta.title.replace(/"/g, ''),
                 date: meta.date,
+                formattedDate: moment(meta.date).format('Do MMMM YYYY h:mm:ss a'),
                 categories: meta.categories
             },
             post: {
