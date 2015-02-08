@@ -16,7 +16,7 @@ module.exports = function (grunt) {
   grunt.registerMultiTask('blogbuilder', 'Grunt plugin for building a blog.', function () {
 
     // Declare variables
-    var _ = require('lodash'), categories, category, langs, hljs, content, RSS, feed, newObj, post, post_items = [], chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate, notFoundTemplate, permalink;
+    var _ = require('lodash'), recent_posts, categories, category, langs, hljs, content, RSS, feed, newObj, post, post_items = [], chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate, notFoundTemplate, permalink;
 
     // Merge task-specific and/or target-specific options with these defaults.
     options = this.options({
@@ -41,7 +41,8 @@ module.exports = function (grunt) {
     // Register partials
     Handlebars.registerPartial({
         header: grunt.file.read(options.template.header),
-        footer: grunt.file.read(options.template.footer)
+        footer: grunt.file.read(options.template.footer),
+        sidebar: grunt.file.read(options.template.sidebar)
     });
 
     // Get Marked Metadata
@@ -72,34 +73,6 @@ module.exports = function (grunt) {
     archiveTemplate = Handlebars.compile(grunt.file.read(options.template.archive));
     notFoundTemplate = Handlebars.compile(grunt.file.read(options.template.notfound));
 
-    // Generate pages
-    pages.forEach(function (file) {
-        // Convert it to Markdown
-        content = grunt.file.read(file);
-        md = new MarkedMetadata(content);
-        mdcontent = md.html;
-        meta = md.meta;
-        path = options.www.dest + '/' + (file.replace(options.src.pages, '').replace('.markdown', '').replace('.md', ''));
-
-        // Render the Handlebars template with the content
-        data = {
-            data: options.data,
-            path: path,
-            meta: {
-                title: meta.title.replace(/"/g, ''),
-                date: meta.date
-            },
-            post: {
-                content: mdcontent
-            }
-        };
-        output = pageTemplate(data);
-
-        // Write page to destination
-        grunt.file.mkdir(path);
-        grunt.file.write(path + '/index.html', output);
-    });
-
     // Generate posts
     posts.forEach(function (file) {
         // Convert it to Markdown
@@ -129,10 +102,15 @@ module.exports = function (grunt) {
         post_items.push(data);
     });
 
-    // Output them
+    // Sort posts
     post_items = _.sortBy(post_items, function (item) {
         return item.meta.date;
     });
+
+    // Get recent posts
+    recent_posts = post_items.slice(Math.max(post_items.length - 5, 1));
+
+    // Output them
     post_items.forEach(function (data, index, list) {
         // Get next and previous
         if (index < (list.length - 1)) {
@@ -148,6 +126,9 @@ module.exports = function (grunt) {
             };
         }
 
+        // Get recent posts
+        data.recent_posts = recent_posts;
+
         // Render template
         output = postTemplate(data);
 
@@ -156,10 +137,40 @@ module.exports = function (grunt) {
         grunt.file.write(options.www.dest + data.path + '/index.html', output);
     });
 
+    // Generate pages
+    pages.forEach(function (file) {
+        // Convert it to Markdown
+        content = grunt.file.read(file);
+        md = new MarkedMetadata(content);
+        mdcontent = md.html;
+        meta = md.meta;
+        path = options.www.dest + '/' + (file.replace(options.src.pages, '').replace('.markdown', '').replace('.md', ''));
+
+        // Render the Handlebars template with the content
+        data = {
+            data: options.data,
+            path: path,
+            meta: {
+                title: meta.title.replace(/"/g, ''),
+                date: meta.date
+            },
+            post: {
+                content: mdcontent
+            },
+            recent_posts: recent_posts
+        };
+        output = pageTemplate(data);
+
+        // Write page to destination
+        grunt.file.mkdir(path);
+        grunt.file.write(path + '/index.html', output);
+    });
+
     // Generate archive
     data = {
         data: options.data,
-        posts: []
+        posts: [],
+        recent_posts: recent_posts
     };
 
     // Get the posts
@@ -219,7 +230,8 @@ module.exports = function (grunt) {
         }
         var data = {
             data: options.data,
-            posts: category_posts
+            posts: category_posts,
+            recent_posts: recent_posts
         };
         output = archiveTemplate(data);
 
@@ -253,16 +265,11 @@ module.exports = function (grunt) {
                 url: options.data.url + category_posts[post].path,
                 date: category_posts[post].meta.date
             });
-
-            // Write it
-            path = options.www.dest + '/blog/categories/' + index.toLowerCase().replace(/\./g, '-') + '/atom.xml';
-            grunt.file.write(path, feed.xml({indent: true}));
         }
 
-        // Write the content to the file
-        path = options.www.dest + '/blog/categories/' + index.toLowerCase().replace(/\./g, '-') + '/';
-        grunt.file.mkdir(path);
-        grunt.file.write(path + '/index.html', output);
+        // Write feed
+        path = options.www.dest + '/blog/categories/' + index.toLowerCase().replace(/\./g, '-') + '/atom.xml';
+        grunt.file.write(path, feed.xml({indent: true}));
     });
 
     // Generate index
@@ -290,6 +297,7 @@ module.exports = function (grunt) {
         if (Number(chunk) + 1 > 1) {
           data.prevChunk = Number(chunk);
         }
+        data.recent_posts = recent_posts;
         output = indexTemplate(data);
 
         // If this is the first page, also write it as the index

@@ -2,7 +2,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-8">
 {{#each posts}}
     <article class="post">
         <h1><a href="{{ this.path }}">{{ this.meta.title }}</a></h1>
@@ -10,6 +10,7 @@
     </article>
 {{/each}}
         </div>
+        {{> sidebar }}
     </div>
     <div class="row">
         <div class="col-md-12">

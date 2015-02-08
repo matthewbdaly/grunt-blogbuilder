@@ -14,10 +14,11 @@
     {{/if}}
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-8">
             <article class="post">
                 <h1>{{ meta.title }}</h1>
                 {{{ post.content }}}
+                {{#if data.addthis}}<div class="addthis_sharing_toolbox"></div>{{/if}}
               <section class="comments">
                   {{#if data.disqus }}
                   <div id="disqus_thread"></div>
@@ -36,6 +37,7 @@
               </section>
             </article>
         </div>
+        {{> sidebar }}
     </div>
 
     <div class="row">
@@ -48,6 +50,7 @@
             {{/if}}
         </div>
     </div>
+
 </div>
 
 {{> footer }}

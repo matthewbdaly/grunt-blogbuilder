@@ -50,6 +50,7 @@ module.exports = function (grunt) {
             index: 'templates/index.hbs',
             header: 'templates/partials/header.hbs',
             footer: 'templates/partials/footer.hbs',
+            sidebar: 'templates/partials/sidebar.hbs',
             archive: 'templates/archive.hbs',
             notfound: 'templates/404.hbs'
           },

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="{{ data.description }}">
+        {{#if data.facebookcomments}}<meta property="fb:app_id" content="{{ data.facebookcomments }}"/>{{/if}}
+        <link rel="stylesheet" type="text/css" href="/static/bower_components/sass-bootstrap/dist/css/bootstrap.min.css" media="all" />
+        <link rel="stylesheet" type="text/css" href="/static/css/style.min.css" media="all" />
+        <link rel="alternate" type="application/rss+xml" title="{{ data.title }} - feed" href="/atom.xml" />
+        <title>{{#if meta.title}}{{ meta.title }} - {{/if}}{{ data.title }}</title>
+    </head>
+    <body>
+
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+        {{#if data.addthis}}<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid={{ data.addthis }}" async="async"></script>{{/if}}
+
+        <header>
+            <div class="container">
+                <div class="page-header">
+                    <a href="/"><h1>{{ data.title }}</h1></a>
+                    <h2>{{ data.description }}</h2>
+                    <nav>
+                        <a href="/">Home</a> | <a href="/blog/archives/">Archives</a> | <a href="/about/">About</a> | <a href="/atom.xml">RSS</a>
+                    </nav>
+                </div>
+            </div>
+        </header>
