@@ -109,7 +109,7 @@ module.exports = function (grunt) {
     });
 
     // Get recent posts
-    recent_posts = post_items.slice(Math.max(post_items.length - 5, 1));
+    recent_posts = post_items.slice(Math.max(post_items.length - 5, 1)).reverse();
 
     // Output them
     post_items.forEach(function (data, index, list) {
