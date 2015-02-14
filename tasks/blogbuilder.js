@@ -29,6 +29,11 @@ module.exports = function (grunt) {
     // Get Handlebars
     Handlebars = require('handlebars');
 
+    // Create a helper for formatting categories for links
+    Handlebars.registerHelper('linkformat', function (item, options) {
+        return item.toLowerCase().replace(/\./g, '-');
+    });
+
     // Get RSS
     RSS = require('rss');
 

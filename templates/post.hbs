@@ -19,7 +19,7 @@
                 <p class="date">{{ this.meta.formattedDate }}</p>
                 <h1>{{ meta.title }}</h1>
                 {{{ post.content }}}
-                <ul>{{#each meta.categories }}<li>{{ this }}</li>{{/each}}</ul>
+                <ul>{{#each meta.categories }}<li><a href="/blog/categories/{{ linkformat this }}/">{{ this }}</a></li>{{/each}}</ul>
                 {{#if data.addthis}}<div class="addthis_sharing_toolbox"></div>{{/if}}
               <section class="comments">
                   {{#if data.disqus }}
