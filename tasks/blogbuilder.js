@@ -34,6 +34,43 @@ module.exports = function (grunt) {
         return item.toLowerCase().replace(/\./g, '-');
     });
 
+    // Create a helper for capitalizing the first letter of words
+    Handlebars.registerHelper('capitalize', function (item, options) {
+        // Break string into parts
+        var reservedWords, word, words = item.split(' ');
+
+        // Define reserved words
+        reservedWords = [
+            'a',
+            'and',
+            'in',
+            'from',
+            'to',
+            'the',
+            'for',
+            'on',
+            'of'
+        ];
+
+        // If is not one of the reserved words
+        for (word in words) {
+            // Skip the first word
+            if (word === 0) {
+                continue;
+            }
+
+            // Search for word in reservedWords
+            if (reservedWords.indexOf(words[word]) === -1) {
+                // Is word already capitalized?
+                if (words[word].toUpperCase() !== words[word]) {
+                    words[word] = words[word].charAt(0).toUpperCase() + words[word].slice(1).toLowerCase();
+                }
+            }
+        }
+
+        return words.join(' ');
+    });
+
     // Get RSS
     RSS = require('rss');
 

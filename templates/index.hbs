@@ -6,7 +6,7 @@
 {{#each posts}}
     <article class="post">
         <p class="date">{{ this.meta.formattedDate }}</p>
-        <h1><a href="{{ this.path }}">{{ this.meta.title }}</a></h1>
+        <h1><a href="{{ this.path }}">{{capitalize this.meta.title}}</a></h1>
         {{{ this.post.content }}}
     </article>
 {{/each}}

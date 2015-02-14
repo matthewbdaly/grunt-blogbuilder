@@ -17,7 +17,7 @@
         <div class="col-md-8">
             <article class="post">
                 <p class="date">{{ this.meta.formattedDate }}</p>
-                <h1>{{ meta.title }}</h1>
+                <h1>{{capitalize meta.title}}</h1>
                 {{{ post.content }}}
                 <ul>{{#each meta.categories }}<li><a href="/blog/categories/{{ linkformat this }}/">{{ this }}</a></li>{{/each}}</ul>
                 {{#if data.addthis}}<div class="addthis_sharing_toolbox"></div>{{/if}}
@@ -27,7 +27,7 @@
                   <script type="text/javascript">
                     window.disqus_identifier="";
                     window.disqus_url="{{ data.url }}{{ path }}/";
-                    window.disqus_title="{{ meta.title }}";
+                    window.disqus_title="{{capitalize meta.title}}";
                   </script>
                   <script type="text/javascript" src="http://disqus.com/forums/{{ data.disqus }}/embed.js"></script>
                   <noscript><a href="http://{{ data.disqus }}.disqus.com/?url=ref">View the discussion thread.</a></noscript>
@@ -45,10 +45,10 @@
     <div class="row">
         <div class="col-md-12">
             {{#if next}}
-            <a href="{{ next.path }}">{{ next.title }}</a>
+            <a href="{{ next.path }}">{{capitalize next.title}}</a>
             {{/if}}
             {{#if prev}}
-            <a href="{{ prev.path }}">{{ prev.title }}</a>
+            <a href="{{ prev.path }}">{{capitalize prev.title}}</a>
             {{/if}}
         </div>
     </div>
