@@ -52,7 +52,8 @@ module.exports = function (grunt) {
             footer: 'templates/partials/footer.hbs',
             sidebar: 'templates/partials/sidebar.hbs',
             archive: 'templates/archive.hbs',
-            notfound: 'templates/404.hbs'
+            notfound: 'templates/404.hbs',
+            robots: 'templates/robots.txt'
           },
           src: {
             posts: 'content/posts/',
