@@ -33,7 +33,7 @@ module.exports = function (grunt) {
 
     // Configuration to be run (and then tested).
     blogbuilder: {
-      default_options: {
+      default: {
         options: {
           data: {
             author: "My Name",
@@ -63,7 +63,7 @@ module.exports = function (grunt) {
           }
         },
         files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123']
+          'tmp/default': ['test/fixtures/testing', 'test/fixtures/123']
         }
       }
     },
