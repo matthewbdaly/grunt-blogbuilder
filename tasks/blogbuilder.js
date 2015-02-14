@@ -92,7 +92,7 @@ module.exports = function (grunt) {
             meta: {
                 title: meta.title.replace(/"/g, ''),
                 date: meta.date,
-                formattedDate: moment(meta.date).format('Do MMMM YYYY h:mm:ss a'),
+                formattedDate: moment(new Date(meta.date)).format('Do MMMM YYYY h:mm:ss a'),
                 categories: meta.categories
             },
             post: {
