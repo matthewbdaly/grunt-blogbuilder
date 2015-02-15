@@ -16,7 +16,7 @@ module.exports = function (grunt) {
   grunt.registerMultiTask('blogbuilder', 'Grunt plugin for building a blog.', function () {
 
     // Declare variables
-    var _ = require('lodash'), moment = require('moment'), recent_posts, categories, category, langs, hljs, content, RSS, feed, newObj, post, post_items = [], chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate, notFoundTemplate, permalink;
+    var _ = require('lodash'), moment = require('moment'), recent_posts, categories, category, langs, hljs, content, RSS, feed, newObj, post, post_items = [], chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate, notFoundTemplate, categoryTemplate, permalink;
 
     // Merge task-specific and/or target-specific options with these defaults.
     options = this.options({
@@ -114,6 +114,7 @@ module.exports = function (grunt) {
     indexTemplate = Handlebars.compile(grunt.file.read(options.template.index));
     archiveTemplate = Handlebars.compile(grunt.file.read(options.template.archive));
     notFoundTemplate = Handlebars.compile(grunt.file.read(options.template.notfound));
+    categoryTemplate = Handlebars.compile(grunt.file.read(options.template.category));
 
     // Generate posts
     posts.forEach(function (file) {
@@ -135,7 +136,7 @@ module.exports = function (grunt) {
             meta: {
                 title: meta.title.replace(/"/g, ''),
                 date: meta.date,
-                formattedDate: moment(new Date(meta.date)).format('Do MMMM YYYY h:mm:ss a'),
+                formattedDate: moment(new Date(meta.date)).format('Do MMMM YYYY h:mm a'),
                 categories: meta.categories
             },
             post: {
@@ -277,9 +278,10 @@ module.exports = function (grunt) {
             year: options.year,
             data: options.data,
             posts: category_posts,
-            recent_posts: recent_posts
+            recent_posts: recent_posts,
+            category: index.charAt(0).toUpperCase() + index.slice(1).toLowerCase()
         };
-        output = archiveTemplate(data);
+        output = categoryTemplate(data);
 
         // Write the content to the file
         path = options.www.dest + '/blog/categories/' + index.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '-') + '/';

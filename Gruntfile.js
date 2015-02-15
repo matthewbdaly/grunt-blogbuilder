@@ -53,7 +53,8 @@ module.exports = function (grunt) {
             sidebar: 'templates/partials/sidebar.hbs',
             archive: 'templates/archive.hbs',
             notfound: 'templates/404.hbs',
-            robots: 'templates/robots.txt'
+            robots: 'templates/robots.txt',
+            category: 'templates/category.hbs'
           },
           src: {
             posts: 'content/posts/',
