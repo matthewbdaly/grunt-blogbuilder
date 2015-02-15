@@ -279,7 +279,7 @@ module.exports = function (grunt) {
         output = archiveTemplate(data);
 
         // Write the content to the file
-        path = options.www.dest + '/blog/categories/' + index.toLowerCase().replace(/\./g, '-') + '/';
+        path = options.www.dest + '/blog/categories/' + index.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '-') + '/';
         grunt.file.mkdir(path);
         grunt.file.write(path + '/index.html', output);
     });
@@ -296,7 +296,7 @@ module.exports = function (grunt) {
         feed = new RSS({
             title: index + ' | ' + options.data.title,
             description: index + ' | ' + options.data.description,
-            url: options.data.url + '/blog/categories/' + index.toLowerCase().replace(/\./g, '-') + '/'
+            url: options.data.url + '/blog/categories/' + index.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '-') + '/'
         });
 
         // Get the posts
@@ -311,7 +311,7 @@ module.exports = function (grunt) {
         }
 
         // Write feed
-        path = options.www.dest + '/blog/categories/' + index.toLowerCase().replace(/\./g, '-') + '/atom.xml';
+        path = options.www.dest + '/blog/categories/' + index.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '-') + '/atom.xml';
         grunt.file.write(path, feed.xml({indent: true}));
     });
 
