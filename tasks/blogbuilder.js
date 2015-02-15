@@ -129,6 +129,7 @@ module.exports = function (grunt) {
 
         // Render the Handlebars template with the content
         data = {
+            year: options.year,
             data: options.data,
             path: permalink + '/',
             meta: {
@@ -139,8 +140,7 @@ module.exports = function (grunt) {
             },
             post: {
                 content: mdcontent
-            },
-            year: options.year
+            }
         };
         post_items.push(data);
     });
@@ -191,6 +191,7 @@ module.exports = function (grunt) {
 
         // Render the Handlebars template with the content
         data = {
+            year: options.year,
             data: options.data,
             path: path,
             meta: {
@@ -211,6 +212,7 @@ module.exports = function (grunt) {
 
     // Generate archive
     data = {
+        year: options.year,
         data: options.data,
         posts: [],
         recent_posts: recent_posts
@@ -272,6 +274,7 @@ module.exports = function (grunt) {
             category_posts.push(element[category_post]);
         }
         var data = {
+            year: options.year,
             data: options.data,
             posts: category_posts,
             recent_posts: recent_posts
@@ -324,6 +327,7 @@ module.exports = function (grunt) {
     // Then, loop through each chunk and write the content to the file
     for (chunk in postChunks) {
         data = {
+            year: options.year,
             data: options.data,
             posts: []
         };
