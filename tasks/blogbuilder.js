@@ -16,15 +16,16 @@ module.exports = function (grunt) {
   grunt.registerMultiTask('blogbuilder', 'Grunt plugin for building a blog.', function () {
 
     // Declare variables
-    var _ = require('lodash'), moment = require('moment'), recent_posts, categories, category, langs, hljs, content, RSS, feed, newObj, post, post_items = [], chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate, notFoundTemplate, categoryTemplate, permalink;
+    var parseUrl = require('url'), _ = require('lodash'), moment = require('moment'), recent_posts, categories, category, langs, hljs, content, RSS, feed, newObj, post, post_items = [], chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate, notFoundTemplate, categoryTemplate, permalink;
 
     // Merge task-specific and/or target-specific options with these defaults.
     options = this.options({
       punctuation: '.',
       separator: ', ',
       size: 5,
-      year: new Date().getFullYear()
+      year: new Date().getFullYear(),
     });
+    options.domain = parseUrl.parse(options.data.url).hostname;
 
     // Get Handlebars
     Handlebars = require('handlebars');
@@ -132,6 +133,7 @@ module.exports = function (grunt) {
         data = {
             year: options.year,
             data: options.data,
+            domain: options.domain,
             path: permalink + '/',
             meta: {
                 title: meta.title.replace(/"/g, ''),
@@ -194,6 +196,7 @@ module.exports = function (grunt) {
         data = {
             year: options.year,
             data: options.data,
+            domain: options.domain,
             path: path,
             meta: {
                 title: meta.title.replace(/"/g, ''),
@@ -215,6 +218,7 @@ module.exports = function (grunt) {
     data = {
         year: options.year,
         data: options.data,
+        domain: options.domain,
         posts: [],
         recent_posts: recent_posts
     };
@@ -278,6 +282,7 @@ module.exports = function (grunt) {
             year: options.year,
             data: options.data,
             posts: category_posts,
+            domain: options.domain,
             recent_posts: recent_posts,
             category: index.charAt(0).toUpperCase() + index.slice(1).toLowerCase()
         };
@@ -331,6 +336,7 @@ module.exports = function (grunt) {
         data = {
             year: options.year,
             data: options.data,
+            domain: options.domain,
             posts: []
         };
 
@@ -362,7 +368,8 @@ module.exports = function (grunt) {
 
     // Create 404 page
     newObj = {
-        data: options.data
+        data: options.data,
+        domain: options.domain
     };
 
     output = notFoundTemplate(newObj);

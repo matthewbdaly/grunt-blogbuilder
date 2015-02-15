@@ -6,21 +6,48 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
         <meta name="description" content="{{ data.description }}">
         {{#if data.facebookcomments}}<meta property="fb:app_id" content="{{ data.facebookcomments }}"/>{{/if}}
-        <link rel="stylesheet" type="text/css" href="/static/bower_components/bootstrap-sass/dist/css/bootstrap.min.css" media="all" />
-        <link rel="stylesheet" type="text/css" href="/static/bower_components/flat-ui/dist/css/flat-ui.min.css" media="all" />
-        <link rel="stylesheet" type="text/css" href="/static/bower_components/highlightjs/styles/rainbow.css" media="all" />
-        <link rel="alternate" type="application/rss+xml" title="{{capitalize data.title }} - feed" href="/atom.xml" />
+        <link rel="stylesheet" type="text/css" href="/static/bower_components/sass-bootstrap/dist/css/bootstrap.min.css" media="all" />
+        <link rel="stylesheet" type="text/css" href="/static/css/style.min.css" media="all" />
+        <link rel="alternate" type="application/rss+xml" title="{{capitalize data.title}} - feed" href="/atom.xml" />
         <title>{{#if meta.title}}{{capitalize meta.title}} - {{/if}}{{capitalize data.title}}</title>
     </head>
     <body>
+
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+        {{#if data.addthis}}<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid={{ data.addthis }}" async="async"></script>{{/if}}
+
         <header>
+            <nav class="navbar navbar-inverse navbar-static-top">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#header-nav">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="header-nav">
+                            <ul class="nav navbar-nav">
+                                <li><a href="/">Home</a></li>
+                                <li><a href="/blog/archives/">Archives</a></li>
+                                <li><a href="/about/">About</a></li>
+                                <li><a href="/atom.xml">RSS</a></li>
+                            </ul>
+                            <form action="http://www.google.com/search" method="GET" name="searchForm" id="searchForm" enctype="application/x-www-form-urlencoded" class="navbar-form navbar-right">
+                                <div class="form-group">
+                                    <input id="search" type="search" name="q" placeholder="Search..." maxlength="200" class="form-control"></input>
+                                </div>
+                                <input id="site" name="q" type="hidden" value="site:{{ domain }}" />
+                                <input type="submit" class="btn btn-default"></input>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
             <div class="container">
                 <div class="page-header">
-                    <a href="/"><h1>{{capitalize data.title}}</h1></a>
+                    <h1><a href="/">{{capitalize data.title}}</a></h1>
                     <h2>{{ data.description }}</h2>
-                    <nav>
-                        <a href="/">Home</a> | <a href="/blog/archives/">Archives</a> | <a href="/about/">About</a> | <a href="/atom.xml">RSS</a>
-                    </nav>
                 </div>
             </div>
         </header>
