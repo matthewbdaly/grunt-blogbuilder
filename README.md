@@ -1,6 +1,6 @@
 # grunt-blogbuilder
 
-A Grunt task for generating a static blog
+A Grunt task for generating a static blog. Used for generating [my blog](http://matthewdaly.co.uk/).
 
 WARNING! Currently under heavy development!
 
