@@ -369,6 +369,7 @@ module.exports = function (grunt) {
     // Create 404 page
     newObj = {
         data: options.data,
+        year: options.year,
         domain: options.domain
     };
 
