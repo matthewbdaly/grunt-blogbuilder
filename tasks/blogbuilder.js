@@ -184,7 +184,22 @@ module.exports = function (grunt) {
         grunt.file.write(options.www.dest + data.path + '/index.html', output);
     });
 
-    // Generate pages
+    // Generate index of posts
+    searchIndex = lunr(function () {
+        this.field('title', { boost: 10 });
+        this.field('body');
+        this.ref('href');
+    });
+    for (post in post_items) {
+        var doc = {
+            'title': post_items[post].meta.title,
+            'body': post_items[post].post.rawcontent,
+            'href': post_items[post].path
+        };
+        searchIndex.add(doc);
+    }
+
+    // Generate pages and add them to the index
     pages.forEach(function (file) {
         // Convert it to Markdown
         content = grunt.file.read(file);
@@ -214,22 +229,17 @@ module.exports = function (grunt) {
         // Write page to destination
         grunt.file.mkdir(path);
         grunt.file.write(path + '/index.html', output);
-    });
 
-    // Generate index of posts and pages
-    searchIndex = lunr(function () {
-        this.field('title', { boost: 10 });
-        this.field('body');
-        this.ref('href');
-    });
-    for (post in post_items) {
+        // Add them to the index
         var doc = {
-            'title': post_items[post].meta.title,
-            'body': post_items[post].post.rawcontent,
-            'ref': post_items[post].path
+            'title': data.meta.title,
+            'body': data.post.rawcontent,
+            'href': data.path
         };
         searchIndex.add(doc);
-    }
+    });
+
+    // Write index
     grunt.file.write(options.www.dest + '/lunr.json', JSON.stringify(searchIndex.toJSON()));
 
     // Generate archive
