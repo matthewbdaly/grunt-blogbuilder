@@ -235,7 +235,7 @@ module.exports = function (grunt) {
         var doc = {
             'title': data.meta.title,
             'body': data.post.rawcontent,
-            'href': data.path
+            'href': permalink + '/'
         };
         searchIndex.add(doc);
     });
