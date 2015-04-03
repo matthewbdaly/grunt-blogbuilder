@@ -206,7 +206,8 @@ module.exports = function (grunt) {
         md = new MarkedMetadata(content);
         mdcontent = md.html;
         meta = md.meta;
-        path = options.www.dest + '/' + (file.replace(options.src.pages, '').replace('.markdown', '').replace('.md', ''));
+        permalink = '/' + (file.replace(options.src.pages, '').replace('.markdown', '').replace('.md', ''));
+        path = options.www.dest + permalink;
 
         // Render the Handlebars template with the content
         data = {
