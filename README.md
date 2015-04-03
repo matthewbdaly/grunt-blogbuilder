@@ -2,6 +2,8 @@
 
 A Grunt task for generating a static blog. Used for generating [my blog](http://matthewdaly.co.uk/).
 
+It also generates a Lunr.js index file.
+
 WARNING! Currently under heavy development!
 
 ## Getting Started
