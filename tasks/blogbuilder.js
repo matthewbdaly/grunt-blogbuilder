@@ -16,7 +16,7 @@ module.exports = function (grunt) {
   grunt.registerMultiTask('blogbuilder', 'Grunt plugin for building a blog.', function () {
 
     // Declare variables
-    var parseUrl = require('url'), _ = require('lodash'), moment = require('moment'), recent_posts, categories, category, langs, hljs, content, RSS, feed, newObj, post, post_items = [], chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate, notFoundTemplate, categoryTemplate, permalink;
+    var parseUrl = require('url'), _ = require('lodash'), moment = require('moment'), recent_posts, categories, category, langs, hljs, content, RSS, feed, newObj, post, post_items = [], chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate, notFoundTemplate, categoryTemplate, permalink, searchIndex, lunr = require('lunr');
 
     // Merge task-specific and/or target-specific options with these defaults.
     options = this.options({
@@ -142,7 +142,8 @@ module.exports = function (grunt) {
                 categories: meta.categories
             },
             post: {
-                content: mdcontent
+                content: mdcontent,
+                rawcontent: content
             }
         };
         post_items.push(data);
@@ -203,7 +204,8 @@ module.exports = function (grunt) {
                 date: meta.date
             },
             post: {
-                content: mdcontent
+                content: mdcontent,
+                rawcontent: content
             },
             recent_posts: recent_posts
         };
@@ -213,6 +215,22 @@ module.exports = function (grunt) {
         grunt.file.mkdir(path);
         grunt.file.write(path + '/index.html', output);
     });
+
+    // Generate index of posts and pages
+    searchIndex = lunr(function () {
+        this.field('title', { boost: 10 });
+        this.field('body');
+        this.ref('href');
+    });
+    for (post in post_items) {
+        var doc = {
+            'title': post_items[post].meta.title,
+            'body': post_items[post].post.rawcontent,
+            'ref': post_items[post].path
+        };
+        searchIndex.add(doc);
+    }
+    grunt.file.write(options.www.dest + '/lunr.json', JSON.stringify(searchIndex.toJSON()));
 
     // Generate archive
     data = {
