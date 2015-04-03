@@ -1,6 +1,6 @@
 {
   "name": "grunt-blogbuilder",
-  "version": "0.0.39",
+  "version": "0.0.40",
   "description": "Grunt plugin for building a blog.",
   "repository": {
     "type": "git",
