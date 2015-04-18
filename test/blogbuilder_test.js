@@ -28,11 +28,13 @@ exports.blogbuilder = {
     done();
   },
   default: function (test) {
-    test.expect(1);
+    // Declare variables
+    var actual, expected;
 
-    var actual = grunt.file.read('tmp/default');
-    var expected = grunt.file.read('test/expected/default');
-    test.equal(actual, expected, 'should describe what the default behavior is.');
+    // Test RSS feed
+    actual = grunt.file.read('tmp/build/atom.xml');
+    expected = grunt.file.read('test/expected/atom.xml');
+    test.equal(actual, expected, 'should generate an RSS feed with one item.');
 
     test.done();
   }
