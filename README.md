@@ -1,4 +1,4 @@
-# grunt-blogbuilder
+# grunt-blogbuilder [![Build Status](https://travis-ci.org/matthewbdaly/grunt-blogbuilder.svg?branch=master)](https://travis-ci.org/matthewbdaly/grunt-blogbuilder)
 
 A Grunt task for generating a static blog. Used for generating [my blog](http://matthewdaly.co.uk/).
 
