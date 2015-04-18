@@ -31,10 +31,39 @@ exports.blogbuilder = {
     // Declare variables
     var file;
 
-    // Test RSS feed
+    // Test for RSS feed
     file = grunt.file.read('tmp/build/atom.xml');
     test.ok(file, 'RSS feed should exist.');
 
+    // Test for 404 page
+    file = grunt.file.read('tmp/build/404.html');
+    test.ok(file, '404 page should exist');
+
+    // Test for robots.txt
+    file = grunt.file.read('tmp/build/robots.txt');
+    test.ok(file, 'robots.txt should exist');
+
+    // Test for lunr.json
+    file = grunt.file.read('tmp/build/lunr.json');
+    test.ok(file, 'lunr.json should exist');
+
+    // Test for index page
+    file = grunt.file.read('tmp/build/index.html');
+    test.ok(file, 'index page should exist');
+
+    // Test for about page
+    file = grunt.file.read('tmp/build/about/index.html');
+    test.ok(file, 'about page should exist');
+
+    // Test for post index
+    file = grunt.file.read('tmp/build/posts/1/index.html');
+    test.ok(file, 'post index should exist');
+
+    // Test for individual posts
+    file = grunt.file.read('tmp/build/blog/2015/01/17/my-new-blog-post/index.html');
+    test.ok(file, 'individual post should exist');
+
+    // Finish up
     test.done();
   }
 };
