@@ -63,6 +63,18 @@ exports.blogbuilder = {
     file = grunt.file.read('tmp/build/blog/2015/01/17/my-new-blog-post/index.html');
     test.ok(file, 'individual post should exist');
 
+    // Test for archives
+    file = grunt.file.read('tmp/build/blog/archives/index.html');
+    test.ok(file, 'archive page should exist');
+
+    // Test for category pages
+    file = grunt.file.read('tmp/build/blog/categories/test/index.html');
+    test.ok(file, 'category page should exist');
+
+    // Test for category feed
+    file = grunt.file.read('tmp/build/blog/categories/test/atom.xml');
+    test.ok(file, 'category feed should exist');
+
     // Finish up
     test.done();
   }
