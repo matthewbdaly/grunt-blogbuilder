@@ -63,9 +63,38 @@ module.exports = function (grunt) {
           www: {
             dest: 'build'
           }
-        },
-        files: {
-          'tmp/default': ['test/fixtures/testing', 'test/fixtures/123']
+        }
+      },
+      test: {
+        options: {
+          data: {
+            author: "Test Author",
+            url: "http://www.example.com",
+            googleanalytics: "UA-XXXXX-X",
+            facebookcomments: "",
+            disqus: "",
+            title: 'My test blog',
+            description: 'A test blog'
+          },
+          template: {
+            post: 'templates/post.hbs',
+            page: 'templates/page.hbs',
+            index: 'templates/index.hbs',
+            header: 'templates/partials/header.hbs',
+            footer: 'templates/partials/footer.hbs',
+            sidebar: 'templates/partials/sidebar.hbs',
+            archive: 'templates/archive.hbs',
+            notfound: 'templates/404.hbs',
+            robots: 'templates/robots.txt',
+            category: 'templates/category.hbs'
+          },
+          src: {
+            posts: 'test/content/posts/',
+            pages: 'test/content/pages/'
+          },
+          www: {
+            dest: 'tmp/build'
+          }
         }
       }
     },
@@ -74,7 +103,6 @@ module.exports = function (grunt) {
     nodeunit: {
       tests: ['test/*_test.js']
     }
-
   });
 
   // Actually load this plugin's task(s).
@@ -82,9 +110,9 @@ module.exports = function (grunt) {
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'blogbuilder', 'nodeunit']);
+  grunt.registerTask('test', ['clean', 'jshint', 'blogbuilder:test', 'nodeunit']);
 
-  // By default, lint and run all tests.
-  grunt.registerTask('default', ['jshint', 'test']);
+  // By default, just clean run the blogbuilder task.
+  grunt.registerTask('default', ['clean', 'blogbuilder']);
 
 };
