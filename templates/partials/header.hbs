@@ -8,7 +8,7 @@
         {{#if data.facebookcomments}}<meta property="fb:app_id" content="{{ data.facebookcomments }}"/>{{/if}}
         <link rel="stylesheet" type="text/css" href="/static/bower_components/sass-bootstrap/dist/css/bootstrap.min.css" media="all" />
         <link rel="stylesheet" type="text/css" href="/static/css/style.min.css" media="all" />
-        <link rel="alternate" type="application/rss+xml" title="{{capitalize data.title}} - feed" href="/atom.xml" />
+        <link rel="alternate" type="application/rss+xml" title="{{capitalize data.title}} - feed" href="/rss.xml" />
         <title>{{#if meta.title}}{{capitalize meta.title}} - {{/if}}{{capitalize data.title}}</title>
     </head>
     <body>
@@ -30,7 +30,7 @@
                                 <li><a href="/">Home</a></li>
                                 <li><a href="/blog/archives/">Archives</a></li>
                                 <li><a href="/about/">About</a></li>
-                                <li><a href="/atom.xml">RSS</a></li>
+                                <li><a href="/rss.xml">RSS</a></li>
                             </ul>
                             <form action="http://www.google.com/search" method="GET" name="searchForm" id="searchForm" enctype="application/x-www-form-urlencoded" class="navbar-form navbar-right">
                                 <div class="form-group">

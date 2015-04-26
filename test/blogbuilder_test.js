@@ -32,7 +32,7 @@ exports.blogbuilder = {
     var file;
 
     // Test for RSS feed
-    file = grunt.file.read('tmp/build/atom.xml');
+    file = grunt.file.read('tmp/build/rss.xml');
     test.ok(file, 'RSS feed should exist.');
 
     // Test for 404 page
@@ -72,7 +72,7 @@ exports.blogbuilder = {
     test.ok(file, 'category page should exist');
 
     // Test for category feed
-    file = grunt.file.read('tmp/build/blog/categories/test/atom.xml');
+    file = grunt.file.read('tmp/build/blog/categories/test/rss.xml');
     test.ok(file, 'category feed should exist');
 
     // Finish up

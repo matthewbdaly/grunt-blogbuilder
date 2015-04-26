@@ -279,7 +279,7 @@ module.exports = function (grunt) {
         title: options.data.title,
         description: options.data.description,
         site_url: options.data.url,
-        feed_url: options.data.url + '/atom.xml',
+        feed_url: options.data.url + '/rss.xml',
         generator: 'grunt-blogbuilder https://github.com/matthewbdaly/grunt-blogbuilder',
         copyright: options.data.author + ' ' + options.year
     });
@@ -305,7 +305,7 @@ module.exports = function (grunt) {
     }
 
     // Write the content to the file
-    path = options.www.dest + '/atom.xml';
+    path = options.www.dest + '/rss.xml';
     grunt.file.write(path, feed.xml({indent: true}));
 
     // Create categories
@@ -371,7 +371,7 @@ module.exports = function (grunt) {
         }
 
         // Write feed
-        path = options.www.dest + '/blog/categories/' + index.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '-') + '/atom.xml';
+        path = options.www.dest + '/blog/categories/' + index.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '-') + '/rss.xml';
         grunt.file.write(path, feed.xml({indent: true}));
     });
 
