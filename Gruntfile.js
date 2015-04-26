@@ -42,7 +42,8 @@ module.exports = function (grunt) {
             facebookcomments: "",
             disqus: "",
             title: 'My new blog',
-            description: 'A blog'
+            description: 'A blog',
+            truncatefeed: 0
           },
           template: {
             post: 'templates/post.hbs',
