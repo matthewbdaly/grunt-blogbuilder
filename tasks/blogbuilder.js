@@ -278,7 +278,10 @@ module.exports = function (grunt) {
     feed = new RSS({
         title: options.data.title,
         description: options.data.description,
-        url: options.data.url
+        site_url: options.data.url,
+        feed_url: options.data.url + '/atom.xml',
+        generator: 'grunt-blogbuilder https://github.com/matthewbdaly/grunt-blogbuilder',
+        copyright: options.data.author + ' ' + options.year
     });
 
     // Get the posts
