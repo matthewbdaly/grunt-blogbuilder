@@ -134,6 +134,7 @@ module.exports = function (grunt) {
             year: options.year,
             data: options.data,
             domain: options.domain,
+            canonical: options.data.url + permalink + '/',
             path: permalink + '/',
             meta: {
                 title: meta.title.replace(/"/g, ''),
@@ -217,6 +218,7 @@ module.exports = function (grunt) {
             year: options.year,
             data: options.data,
             domain: options.domain,
+            canonical: options.data.url + permalink + '/',
             path: path,
             meta: {
                 title: meta.title.replace(/"/g, ''),
@@ -257,6 +259,7 @@ module.exports = function (grunt) {
         year: options.year,
         data: options.data,
         domain: options.domain,
+        canonical: options.data.url + '/blog/archives/',
         posts: [],
         recent_posts: recent_posts
     };
@@ -333,6 +336,7 @@ module.exports = function (grunt) {
             data: options.data,
             posts: category_posts,
             domain: options.domain,
+            canonical: options.data.url + '/blog/categories/' + index.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '-') + '/',
             recent_posts: recent_posts,
             category: index.charAt(0).toUpperCase() + index.slice(1).toLowerCase()
         };
@@ -403,24 +407,32 @@ module.exports = function (grunt) {
           data.prevChunk = Number(chunk);
         }
         data.recent_posts = recent_posts;
-        output = indexTemplate(data);
 
-        // If this is the first page, also write it as the index
-        if (chunk === "0") {
-            grunt.file.write(options.www.dest + '/index.html', output);
-        }
+        // Set canonical URL
+        data.canonical = options.data.url + '/posts/' + (Number(chunk) + 1) + '/';
+
+        // Generate output
+        output = indexTemplate(data);
 
         // Write the content to the file
         path = options.www.dest + '/posts/' + (Number(chunk) + 1);
         grunt.file.mkdir(path);
         grunt.file.write(path + '/index.html', output);
+
+        // If this is the first page, also write it as the index
+        if (chunk === "0") {
+            data.canonical = options.data.url + '/';
+            output = indexTemplate(data);
+            grunt.file.write(options.www.dest + '/index.html', output);
+        }
     }
 
     // Create 404 page
     newObj = {
         data: options.data,
         year: options.year,
-        domain: options.domain
+        domain: options.domain,
+        canonical: options.data.url + '/404.html'
     };
 
     output = notFoundTemplate(newObj);
