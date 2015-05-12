@@ -110,7 +110,7 @@ module.exports = function (grunt) {
         var lines = code.split('\n');
         var linecount = lines.length;
         for (var i = 1; i <= linecount; i++) {
-          codeoutput += ('<span class="linenos">' + i + '</span>' + '\t' + lines[i - 1] + '\n');
+          codeoutput += ('<span class="linenos">' + i + '</span>' + lines[i - 1] + '\n');
         }
       } else {
         singleline = true;
