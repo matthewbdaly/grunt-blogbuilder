@@ -102,9 +102,20 @@ module.exports = function (grunt) {
         }
       }
 
+      // Escape code
+      code = escaped ? code : escape(code, true);
+
+      // Break into lines
+      var lines = code.split('\n');
+      var linecount = lines.length - 1;
+      var output = '';
+      for (var i = 1; i <= linecount; i++) {
+          output += (i + '     ' + lines[i - 1] + '\n');
+      }
+
       if (!lang) {
         return '<pre><code>'
-          + (escaped ? code : escape(code, true))
+          + output
           + '\n</code></pre>';
       }
 
@@ -112,7 +123,7 @@ module.exports = function (grunt) {
         + this.options.langPrefix
         + escape(lang, true)
         + '">'
-        + (escaped ? code : escape(code, true))
+        + output
         + '\n</code></pre>\n';
     };
 
