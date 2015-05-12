@@ -106,29 +106,29 @@ module.exports = function (grunt) {
       //code = escaped ? code : escape(code, true);
 
       // Break into lines
+      var codeoutput = '';
       if (code.indexOf('\n') > -1) {
         var lines = code.split('\n');
         var linecount = lines.length;
-        var output = '';
         for (var i = 1; i <= linecount; i++) {
-          output += ('<span class="linenos">' + i + '</span>' + '\t' + lines[i - 1] + '\n');
+          codeoutput += ('<span class="linenos">' + i + '</span>' + '\t' + lines[i - 1] + '\n');
         }
       } else {
-        output = code;
+        codeoutput = code;
       }
 
       if (!lang) {
-        return '<pre><code>'
-          + output
-          + '\n</code></pre>';
+        return '<pre><code>' +
+          codeoutput + 
+          '\n</code></pre>';
       }
 
-      return '<pre><code class="'
-        + this.options.langPrefix
-        + escape(lang, true)
-        + '">'
-        + output
-        + '\n</code></pre>\n';
+      return '<pre><code class="' + 
+        this.options.langPrefix +
+        lang +
+        '">' +
+        codeoutput +
+        '\n</code></pre>\n';
     };
 
     // Set options
