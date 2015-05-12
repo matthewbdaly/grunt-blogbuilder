@@ -103,7 +103,7 @@ module.exports = function (grunt) {
       }
 
       // Escape code
-      code = escaped ? code : escape(code, true);
+      //code = escaped ? code : escape(code, true);
 
       // Break into lines
       if (code.indexOf('\n') > -1) {
