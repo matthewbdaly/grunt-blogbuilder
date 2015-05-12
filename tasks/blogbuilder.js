@@ -90,6 +90,33 @@ module.exports = function (grunt) {
 
     // Get Marked Metadata
     MarkedMetadata = require('meta-marked');
+
+    // Create custom renderer
+    var renderer = new MarkedMetadata.Renderer();
+    renderer.code = function (code, lang, escaped) {
+      if (this.options.highlight) {
+        var out = this.options.highlight(code, lang);
+        if (out != null && out !== code) {
+          escaped = true;
+          code = out;
+        }
+      }
+
+      if (!lang) {
+        return '<pre><code>'
+          + (escaped ? code : escape(code, true))
+          + '\n</code></pre>';
+      }
+
+      return '<pre><code class="'
+        + this.options.langPrefix
+        + escape(lang, true)
+        + '">'
+        + (escaped ? code : escape(code, true))
+        + '\n</code></pre>\n';
+    };
+
+    // Set options
     MarkedMetadata.setOptions({
         gfm: true,
         tables: true,
@@ -102,7 +129,8 @@ module.exports = function (grunt) {
             } else {
                 return hljs.highlightAuto(code).value;
             }
-        }
+        },
+        renderer: renderer
     });
 
     // Get matching files
