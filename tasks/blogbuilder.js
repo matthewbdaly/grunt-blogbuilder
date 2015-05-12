@@ -106,11 +106,15 @@ module.exports = function (grunt) {
       code = escaped ? code : escape(code, true);
 
       // Break into lines
-      var lines = code.split('\n');
-      var linecount = lines.length - 1;
-      var output = '';
-      for (var i = 1; i <= linecount; i++) {
+      if (code.indexOf('\n') > -1) {
+        var lines = code.split('\n');
+        var linecount = lines.length;
+        var output = '';
+        for (var i = 1; i <= linecount; i++) {
           output += ('<span class="linenos">' + i + '</span>' + '\t' + lines[i - 1] + '\n');
+        }
+      } else {
+        output = code;
       }
 
       if (!lang) {
