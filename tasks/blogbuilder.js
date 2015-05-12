@@ -102,9 +102,6 @@ module.exports = function (grunt) {
         }
       }
 
-      // Escape code
-      //code = escaped ? code : escape(code, true);
-
       // Break into lines
       var codeoutput = '';
       if (code.indexOf('\n') > -1) {
@@ -132,7 +129,7 @@ module.exports = function (grunt) {
     };
 
     // Set options
-    MarkedMetadata.setOptions({
+    var mdoptions = {
         gfm: true,
         tables: true,
         smartLists: true,
@@ -144,9 +141,12 @@ module.exports = function (grunt) {
             } else {
                 return hljs.highlightAuto(code).value;
             }
-        },
-        renderer: renderer
-    });
+        }
+    };
+    if (options.data.linenos) {
+        mdoptions.renderer = renderer;
+    }
+    MarkedMetadata.setOptions(mdoptions);
 
     // Get matching files
     posts = grunt.file.expand(options.src.posts + '*.md', options.src.posts + '*.markdown');
