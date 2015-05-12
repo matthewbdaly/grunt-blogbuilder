@@ -104,28 +104,35 @@ module.exports = function (grunt) {
 
       // Break into lines
       var codeoutput = '';
+      var singleline;
       if (code.indexOf('\n') > -1) {
+        singleline = false;
         var lines = code.split('\n');
         var linecount = lines.length;
         for (var i = 1; i <= linecount; i++) {
           codeoutput += ('<span class="linenos">' + i + '</span>' + '\t' + lines[i - 1] + '\n');
         }
       } else {
+        singleline = true;
         codeoutput = code;
       }
 
+      // Trim trailing whitespace
+      codeoutput = codeoutput.trimRight();
+
       if (!lang) {
-        return '<pre><code>' +
+        return '<pre><code' + (singleline ? ' class="singleline"' : '') + '>' +
           codeoutput + 
-          '\n</code></pre>';
+          '</code></pre>';
       }
 
       return '<pre><code class="' + 
         this.options.langPrefix +
         lang +
+        (singleline ? ' singleline' : '') +
         '">' +
         codeoutput +
-        '\n</code></pre>\n';
+        '</code></pre>\n';
     };
 
     // Set options
