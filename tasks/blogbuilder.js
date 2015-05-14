@@ -30,6 +30,11 @@ module.exports = function (grunt) {
     // Get Handlebars
     Handlebars = require('handlebars');
 
+    // Create a helper for joining arrays
+    Handlebars.registerHelper('join', function (items) {
+        return items.join(',');
+    });
+
     // Create a helper for formatting categories for links
     Handlebars.registerHelper('linkformat', function (item, options) {
         return item.toLowerCase().replace(/\./g, '-');
