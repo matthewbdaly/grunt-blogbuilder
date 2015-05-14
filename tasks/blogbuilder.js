@@ -78,6 +78,12 @@ module.exports = function (grunt) {
     // Get Highlight.js
     hljs = require('highlight.js');
 
+    // Set options
+    hljs.configure({
+        tabReplace: '    ',
+        useBR: true
+    });
+
     // Get languages
     langs = hljs.listLanguages();
 
@@ -110,7 +116,7 @@ module.exports = function (grunt) {
         var lines = code.split('\n');
         var linecount = lines.length;
         for (var i = 1; i <= linecount; i++) {
-          codeoutput += ('<span class="linenos">' + i + '</span>' + lines[i - 1] + '\n');
+          codeoutput += ('<span class="linenos">' + i + '</span>' + lines[i - 1] + '<br/>');
         }
       } else {
         singleline = true;
@@ -190,7 +196,7 @@ module.exports = function (grunt) {
                 title: meta.title.replace(/"/g, ''),
                 date: meta.date,
                 formattedDate: moment(new Date(meta.date)).format('Do MMMM YYYY h:mm a'),
-                categories: meta.categories
+                categories: meta.categories || []
             },
             post: {
                 content: mdcontent,
@@ -238,12 +244,14 @@ module.exports = function (grunt) {
     // Generate index of posts
     searchIndex = lunr(function () {
         this.field('title', { boost: 10 });
+        this.field('categories', { boost: 10 });
         this.field('body');
         this.ref('href');
     });
     for (post in post_items) {
         var doc = {
             'title': post_items[post].meta.title,
+            'categories': post_items[post].meta.categories.join(','),
             'body': post_items[post].post.rawcontent,
             'href': post_items[post].path
         };
