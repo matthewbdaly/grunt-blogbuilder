@@ -43,7 +43,8 @@ module.exports = function (grunt) {
             disqus: "",
             title: 'My new blog',
             description: 'A blog',
-            truncatefeed: 0
+            truncatefeed: 0,
+            linenos: true
           },
           template: {
             post: 'templates/post.hbs',

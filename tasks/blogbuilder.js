@@ -121,7 +121,7 @@ module.exports = function (grunt) {
         var lines = code.split('\n');
         var linecount = lines.length;
         for (var i = 1; i <= linecount; i++) {
-          codeoutput += ('<span class="linenos">' + i + '</span>' + lines[i - 1] + '<br/>');
+          codeoutput += ('<tr><td class="linenos" data-pseudo-content="' + i + '"></td><td>' + lines[i - 1] + '</td>');
         }
       } else {
         singleline = true;
@@ -141,9 +141,9 @@ module.exports = function (grunt) {
         this.options.langPrefix +
         lang +
         (singleline ? ' singleline' : '') +
-        '">' +
+        '"><table>' +
         codeoutput +
-        '</code></pre>\n';
+        '</table></code></pre>\n';
     };
 
     // Set options
