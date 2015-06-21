@@ -345,7 +345,6 @@ module.exports = function (grunt) {
         title: options.data.title,
         description: options.data.description,
         link: options.data.url,
-        //generator: 'grunt-blogbuilder https://github.com/matthewbdaly/grunt-blogbuilder',
         copyright: options.data.author + ' ' + options.year,
         author: {
           name: options.data.author,
@@ -360,7 +359,12 @@ module.exports = function (grunt) {
         feeditem = {
             title: post_items[post].meta.title,
             link: options.data.url + post_items[post].path,
-            date: post_items[post].meta.date
+            date: post_items[post].meta.date,
+            author: {
+              name: options.data.author,
+              email: options.data.email,
+              link: options.data.url
+            }
         };
 
         // If set to truncate feed items, do so
@@ -375,8 +379,8 @@ module.exports = function (grunt) {
     }
 
     // Write the content to the file
-    grunt.file.write(options.www.dest + '/rss.xml', feed.render('rss-2.0'));
-    grunt.file.write(options.www.dest + '/atom.xml', feed.render('atom-1.0'));
+    //grunt.file.write(options.www.dest + '/rss.xml', feed.render('rss-2.0'));
+    //grunt.file.write(options.www.dest + '/atom.xml', feed.render('atom-1.0'));
 
     // Create categories
     categories = {};
@@ -433,7 +437,7 @@ module.exports = function (grunt) {
         // Get the posts
         for (var post in category_posts) {
             // Add to feed
-            feed.item({
+            feed.addItem({
                 title: category_posts[post].meta.title,
                 description: category_posts[post].post.content,
                 link: options.data.url + category_posts[post].path,
@@ -443,8 +447,8 @@ module.exports = function (grunt) {
 
         // Write feed
         path = options.www.dest + '/blog/categories/' + index.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '-');
-        grunt.file.write(path + '/rss.xml', feed.render('rss-2.0'));
-        grunt.file.write(path + '/atom.xml', feed.render('atom-1.0'));
+        //grunt.file.write(path + '/rss.xml', feed.render('rss-2.0'));
+        //grunt.file.write(path + '/atom.xml', feed.render('atom-1.0'));
     });
 
     // Generate index
