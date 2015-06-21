@@ -346,6 +346,7 @@ module.exports = function (grunt) {
         description: options.data.description,
         link: options.data.url,
         copyright: options.data.author + ' ' + options.year,
+        generator: 'grunt-blogbuilder https://github.com/matthewbdaly/grunt-blogbuilder',
         author: {
           name: options.data.author,
           email: options.data.email,
@@ -431,7 +432,14 @@ module.exports = function (grunt) {
         feed = new Feed({
             title: index + ' | ' + options.data.title,
             description: index + ' | ' + options.data.description,
-            link: options.data.url + '/blog/categories/' + index.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '-') + '/'
+            link: options.data.url + '/blog/categories/' + index.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '-') + '/',
+            generator: 'grunt-blogbuilder https://github.com/matthewbdaly/grunt-blogbuilder',
+            copyright: options.data.author + ' ' + options.year,
+            author: {
+              name: options.data.author,
+              email: options.data.email,
+              link: options.data.url
+            }
         });
 
         // Get the posts
