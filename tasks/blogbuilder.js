@@ -359,7 +359,7 @@ module.exports = function (grunt) {
         feeditem = {
             title: post_items[post].meta.title,
             link: options.data.url + post_items[post].path,
-            date: post_items[post].meta.date,
+            date: new Date(post_items[post].meta.date),
             author: {
               name: options.data.author,
               email: options.data.email,
@@ -380,7 +380,7 @@ module.exports = function (grunt) {
 
     // Write the content to the file
     //grunt.file.write(options.www.dest + '/rss.xml', feed.render('rss-2.0'));
-    //grunt.file.write(options.www.dest + '/atom.xml', feed.render('atom-1.0'));
+    grunt.file.write(options.www.dest + '/atom.xml', feed.render('atom-1.0'));
 
     // Create categories
     categories = {};
@@ -441,14 +441,14 @@ module.exports = function (grunt) {
                 title: category_posts[post].meta.title,
                 description: category_posts[post].post.content,
                 link: options.data.url + category_posts[post].path,
-                date: category_posts[post].meta.date
+                date: new Date(category_posts[post].meta.date)
             });
         }
 
         // Write feed
         path = options.www.dest + '/blog/categories/' + index.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '-');
         //grunt.file.write(path + '/rss.xml', feed.render('rss-2.0'));
-        //grunt.file.write(path + '/atom.xml', feed.render('atom-1.0'));
+        grunt.file.write(path + '/atom.xml', feed.render('atom-1.0'));
     });
 
     // Generate index
