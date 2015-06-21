@@ -35,6 +35,10 @@ exports.blogbuilder = {
     file = grunt.file.read('tmp/build/rss.xml');
     test.ok(file, 'RSS feed should exist.');
 
+    // Test for Atom feed
+    file = grunt.file.read('tmp/build/atom.xml');
+    test.ok(file, 'Atom feed should exist');
+
     // Test for 404 page
     file = grunt.file.read('tmp/build/404.html');
     test.ok(file, '404 page should exist');
@@ -71,9 +75,13 @@ exports.blogbuilder = {
     file = grunt.file.read('tmp/build/blog/categories/test/index.html');
     test.ok(file, 'category page should exist');
 
-    // Test for category feed
+    // Test for category RSS feed
     file = grunt.file.read('tmp/build/blog/categories/test/rss.xml');
-    test.ok(file, 'category feed should exist');
+    test.ok(file, 'category RSS feed should exist');
+
+    // Test for category Atom feed
+    file = grunt.file.read('tmp/build/blog/categories/test/atom.xml');
+    test.ok(file, 'category Atom feed should exist');
 
     // Finish up
     test.done();
