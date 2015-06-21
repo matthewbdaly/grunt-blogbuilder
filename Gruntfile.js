@@ -44,6 +44,10 @@ module.exports = function (grunt) {
             disqus: "",
             title: 'My new blog',
             description: 'A blog',
+            keywords: [
+              'my',
+              'blog'
+            ],
             truncatefeed: 0,
             linenos: true
           },
