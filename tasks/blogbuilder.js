@@ -16,7 +16,7 @@ module.exports = function (grunt) {
   grunt.registerMultiTask('blogbuilder', 'Grunt plugin for building a blog.', function () {
 
     // Declare variables
-    var parseUrl = require('url'), _ = require('lodash'), moment = require('moment'), recent_posts, categories, category, langs, hljs, content, Feed, feed, newObj, post, post_items = [], chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate, notFoundTemplate, categoryTemplate, permalink, searchIndex, store = {}, lunr = require('lunr'), feeditem;
+    var parseUrl = require('url'), _ = require('lodash'), moment = require('moment'), recent_posts, categories, category, langs, hljs, content, Feed, feed, newObj, post, post_items = [], chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate, notFoundTemplate, categoryTemplate, permalink, searchIndex, store = {}, lunr = require('lunr'), feeditem, truncate = require('truncate');
 
     // Merge task-specific and/or target-specific options with these defaults.
     options = this.options({
@@ -370,7 +370,7 @@ module.exports = function (grunt) {
 
         // If set to truncate feed items, do so
         if (options.data.truncatefeed) {
-            feeditem.description = _.trunc(post_items[post].post.content, options.data.truncatefeed);
+            feeditem.description = truncate(post_items[post].post.content, options.data.truncatefeed);
         } else {
             feeditem.description = post_items[post].post.content;
         }
