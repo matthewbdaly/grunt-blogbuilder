@@ -16,7 +16,7 @@ module.exports = function (grunt) {
   grunt.registerMultiTask('blogbuilder', 'Grunt plugin for building a blog.', function () {
 
     // Declare variables
-    var parseUrl = require('url'), _ = require('lodash'), moment = require('moment'), recent_posts, categories, category, langs, hljs, content, RSS, feed, newObj, post, post_items = [], chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate, notFoundTemplate, categoryTemplate, permalink, searchIndex, store = {}, lunr = require('lunr'), feeditem;
+    var parseUrl = require('url'), _ = require('lodash'), moment = require('moment'), recent_posts, categories, category, langs, hljs, content, Feed, feed, newObj, post, post_items = [], chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate, notFoundTemplate, categoryTemplate, permalink, searchIndex, store = {}, lunr = require('lunr'), feeditem;
 
     // Merge task-specific and/or target-specific options with these defaults.
     options = this.options({
@@ -77,8 +77,8 @@ module.exports = function (grunt) {
         return words.join(' ');
     });
 
-    // Get RSS
-    RSS = require('rss');
+    // Get Feed
+    Feed = require('feed');
 
     // Get Highlight.js
     hljs = require('highlight.js');
@@ -340,14 +340,18 @@ module.exports = function (grunt) {
     grunt.file.mkdir(path);
     grunt.file.write(path + '/index.html', output);
 
-    // Generate RSS feed
-    feed = new RSS({
+    // Generate RSS and Atom feeds
+    feed = new Feed({
         title: options.data.title,
         description: options.data.description,
-        site_url: options.data.url,
-        feed_url: options.data.url + '/rss.xml',
-        generator: 'grunt-blogbuilder https://github.com/matthewbdaly/grunt-blogbuilder',
-        copyright: options.data.author + ' ' + options.year
+        link: options.data.url,
+        //generator: 'grunt-blogbuilder https://github.com/matthewbdaly/grunt-blogbuilder',
+        copyright: options.data.author + ' ' + options.year,
+        author: {
+          name: options.data.author,
+          email: options.data.email,
+          link: options.data.url
+        }
     });
 
     // Get the posts
@@ -355,7 +359,7 @@ module.exports = function (grunt) {
         // Add to feed
         feeditem = {
             title: post_items[post].meta.title,
-            url: options.data.url + post_items[post].path,
+            link: options.data.url + post_items[post].path,
             date: post_items[post].meta.date
         };
 
@@ -367,12 +371,12 @@ module.exports = function (grunt) {
         }
 
         // Add to feed
-        feed.item(feeditem);
+        feed.addItem(feeditem);
     }
 
     // Write the content to the file
-    path = options.www.dest + '/rss.xml';
-    grunt.file.write(path, feed.xml({indent: true}));
+    grunt.file.write(options.www.dest + '/rss.xml', feed.render('rss-2.0'));
+    grunt.file.write(options.www.dest + '/atom.xml', feed.render('atom-1.0'));
 
     // Create categories
     categories = {};
@@ -420,10 +424,10 @@ module.exports = function (grunt) {
         }
 
         // Create the feed
-        feed = new RSS({
+        feed = new Feed({
             title: index + ' | ' + options.data.title,
             description: index + ' | ' + options.data.description,
-            url: options.data.url + '/blog/categories/' + index.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '-') + '/'
+            link: options.data.url + '/blog/categories/' + index.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '-') + '/'
         });
 
         // Get the posts
@@ -432,14 +436,15 @@ module.exports = function (grunt) {
             feed.item({
                 title: category_posts[post].meta.title,
                 description: category_posts[post].post.content,
-                url: options.data.url + category_posts[post].path,
+                link: options.data.url + category_posts[post].path,
                 date: category_posts[post].meta.date
             });
         }
 
         // Write feed
-        path = options.www.dest + '/blog/categories/' + index.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '-') + '/rss.xml';
-        grunt.file.write(path, feed.xml({indent: true}));
+        path = options.www.dest + '/blog/categories/' + index.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '-');
+        grunt.file.write(path + '/rss.xml', feed.render('rss-2.0'));
+        grunt.file.write(path + '/atom.xml', feed.render('atom-1.0'));
     });
 
     // Generate index
