@@ -21,6 +21,7 @@
                 {{{ post.content }}}
                 <ul>{{#each meta.categories }}<li><a href="/blog/categories/{{ linkformat this }}/">{{ this }}</a></li>{{/each}}</ul>
                 {{#if data.addthis}}<div class="addthis_sharing_toolbox"></div>{{/if}}
+              {{#if meta.comments }}
               <section class="comments">
                   {{#if data.disqus }}
                   <div id="disqus_thread"></div>
@@ -37,6 +38,7 @@
                     </div>
                 {{/if}}
               </section>
+              {{/if}}
             </article>
         </div>
         {{> sidebar }}

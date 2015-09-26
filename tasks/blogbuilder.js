@@ -201,7 +201,8 @@ module.exports = function (grunt) {
                 title: meta.title.replace(/"/g, ''),
                 date: meta.date,
                 formattedDate: moment(new Date(meta.date)).format('Do MMMM YYYY h:mm a'),
-                categories: meta.categories || []
+                categories: meta.categories || [],
+                comments: meta.comments
             },
             post: {
                 content: mdcontent,
