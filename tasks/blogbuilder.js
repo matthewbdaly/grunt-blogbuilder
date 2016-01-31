@@ -1,6 +1,6 @@
 /*
  * blogbuilder
- * 
+ *
  *
  * Copyright (c) 2014 Matthew Daly
  * Licensed under the MIT license.
@@ -133,11 +133,11 @@ module.exports = function (grunt) {
 
       if (!lang) {
         return '<pre><code' + (singleline ? ' class="singleline"' : '') + '>' +
-          codeoutput + 
+          codeoutput +
           '</code></pre>';
       }
 
-      return '<pre><code class="' + 
+      return '<pre><code class="' +
         this.options.langPrefix +
         lang +
         (singleline ? ' singleline' : '') +
@@ -209,7 +209,11 @@ module.exports = function (grunt) {
                 rawcontent: content
             }
         };
-        post_items.push(data);
+
+        // Don't publish drafts
+        if (typeof meta.draft === 'undefined' || meta.draft === false) {
+          post_items.push(data);
+        }
     });
 
     // Sort posts
@@ -296,20 +300,23 @@ module.exports = function (grunt) {
         };
         output = pageTemplate(data);
 
-        // Write page to destination
-        grunt.file.mkdir(path);
-        grunt.file.write(path + '/index.html', output);
+        // Don't publish drafts
+        if (typeof meta.draft === 'undefined' || meta.draft === false) {
+          // Write page to destination
+          grunt.file.mkdir(path);
+          grunt.file.write(path + '/index.html', output);
 
-        // Add them to the index
-        var doc = {
-            'title': data.meta.title,
-            'body': data.post.rawcontent,
-            'href': permalink + '/'
-        };
-        store[doc.href] = {
-            'title': data.meta.title
-        };
-        searchIndex.add(doc);
+          // Add them to the index
+          var doc = {
+              'title': data.meta.title,
+              'body': data.post.rawcontent,
+              'href': permalink + '/'
+          };
+          store[doc.href] = {
+              'title': data.meta.title
+          };
+          searchIndex.add(doc);
+        }
     });
 
     // Write index
