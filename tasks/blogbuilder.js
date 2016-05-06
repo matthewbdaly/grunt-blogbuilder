@@ -16,7 +16,7 @@ module.exports = function (grunt) {
   grunt.registerMultiTask('blogbuilder', 'Grunt plugin for building a blog.', function () {
 
     // Declare variables
-    var parseUrl = require('url'), _ = require('lodash'), moment = require('moment'), recent_posts, categories, category, langs, hljs, content, Feed, feed, newObj, post, post_items = [], chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate, notFoundTemplate, categoryTemplate, permalink, searchIndex, store = {}, lunr = require('lunr'), feeditem, truncate = require('truncate');
+    var parseUrl = require('url'), _ = require('lodash'), moment = require('moment'), recent_posts, categories, category, langs, hljs, content, Feed, feed, newObj, post, post_items = [], chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate, notFoundTemplate, categoryTemplate, permalink, searchIndex, store = {}, lunr = require('lunr'), feeditem, truncate = require('truncate'), pageFileName, indexPage = false;
 
     // Merge task-specific and/or target-specific options with these defaults.
     options = this.options({
@@ -278,7 +278,13 @@ module.exports = function (grunt) {
         md = new MarkedMetadata(content);
         mdcontent = md.html;
         meta = md.meta;
-        permalink = '/' + (file.replace(options.src.pages, '').replace('.markdown', '').replace('.md', ''));
+        pageFileName = file.replace(options.src.pages, '').replace('.markdown', '').replace('.md', '');
+        if (pageFileName === 'index') {
+          permalink = '/';
+          indexPage = true;
+        } else {
+          permalink = '/' + pageFileName;
+        }
         path = options.www.dest + permalink;
 
         // Render the Handlebars template with the content
@@ -508,7 +514,7 @@ module.exports = function (grunt) {
         grunt.file.write(path + '/index.html', output);
 
         // If this is the first page, also write it as the index
-        if (chunk === "0") {
+        if (chunk === "0" && indexPage === false) {
             data.canonical = options.data.url + '/';
             output = indexTemplate(data);
             grunt.file.write(options.www.dest + '/index.html', output);
