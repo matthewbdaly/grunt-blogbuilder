@@ -205,6 +205,7 @@ module.exports = function (grunt) {
       data = {
         year: options.year,
         data: options.data,
+        amptemplates: options.amptemplate,
         domain: options.domain,
         canonical: options.data.url + permalink + '/',
         path: permalink + '/',
