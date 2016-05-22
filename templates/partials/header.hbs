@@ -7,6 +7,7 @@
         <meta name="description" content="{{ data.description }}">
         {{#if meta.categories}}<meta name="keywords" content="{{join meta.categories }}">{{else if data.keywords}}<meta name="keywords" content="{{join data.keywords}}">{{/if}}
         {{#if data.facebookcomments}}<meta property="fb:app_id" content="{{ data.facebookcomments }}"/>{{/if}}
+        {{#if post}}<link rel="amphtml" href="{{ canonical }}amp/">{{/if}}
         <link rel="canonical" href="{{ canonical }}">
         <link rel="stylesheet" type="text/css" href="/static/bower_components/sass-bootstrap/dist/css/bootstrap.min.css" media="all" />
         <link rel="stylesheet" type="text/css" href="/static/css/style.min.css" media="all" />

@@ -13,14 +13,13 @@
         </div>
         {{> sidebar }}
     </div>
-
     <div class="row">
         <div class="col-md-12">
             {{#if next}}
-            <a href="{{ next.path }}/amp/">{{capitalize next.title}}</a>
+            <a href="{{ next.path }}amp/">{{capitalize next.title}}</a>
             {{/if}}
             {{#if prev}}
-            <a href="{{ prev.path }}/amp/">{{capitalize prev.title}}</a>
+            <a href="{{ prev.path }}amp/">{{capitalize prev.title}}</a>
             {{/if}}
         </div>
     </div>
