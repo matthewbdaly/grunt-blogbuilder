@@ -261,36 +261,6 @@ module.exports = function (grunt) {
       grunt.file.mkdir(options.www.dest + data.path);
       grunt.file.write(options.www.dest + data.path + '/index.html', output);
     });
-
-    // Generate AMP posts
-    if (options.amptemplate) {
-      post_items.forEach(function (data, index, list) {
-        // Get next and previous
-        if (index < (list.length - 1)) {
-          data.next = {
-            title: list[index + 1].meta.title,
-            path: list[index + 1].path
-          };
-        }
-        if (index > 0) {
-          data.prev = {
-            title: list[index - 1].meta.title,
-            path: list[index - 1].path
-          };
-        }
-
-        // Get recent posts
-        data.recent_posts = recent_posts;
-
-        // Render template
-        output = ampPostTemplate(data);
-
-        // Write post to destination
-        grunt.file.mkdir(options.www.dest + data.path);
-        grunt.file.write(options.www.dest + data.path + 'amp/index.html', output);
-      });
-    }
-
     // Generate index of posts
     searchIndex = lunr(function () {
       this.field('title', { boost: 10 });
@@ -576,5 +546,34 @@ module.exports = function (grunt) {
 
     // Create robots.txt file
     grunt.file.copy(options.template.robots, options.www.dest + '/robots.txt');
+
+    // Generate AMP posts
+    if (options.amptemplate) {
+      post_items.forEach(function (data, index, list) {
+        // Get next and previous
+        if (index < (list.length - 1)) {
+          data.next = {
+            title: list[index + 1].meta.title,
+            path: list[index + 1].path
+          };
+        }
+        if (index > 0) {
+          data.prev = {
+            title: list[index - 1].meta.title,
+            path: list[index - 1].path
+          };
+        }
+
+        // Get recent posts
+        data.recent_posts = recent_posts;
+
+        // Render template
+        output = ampPostTemplate(data);
+
+        // Write post to destination
+        grunt.file.mkdir(options.www.dest + data.path);
+        grunt.file.write(options.www.dest + data.path + 'amp/index.html', output);
+      });
+    }
   });
 };
