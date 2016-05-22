@@ -66,7 +66,7 @@ module.exports = function (grunt) {
           amptemplate: {
             post: 'templates/amp/post.hbs',
             header: 'templates/amp/header.hbs',
-            footer: 'templates/footer/footer.hbs',
+            footer: 'templates/amp/footer.hbs',
           },
           src: {
             posts: 'content/posts/',
