@@ -100,7 +100,7 @@ module.exports = function (grunt) {
     });
 
     // Register AMP partials
-    if (options.amptemplate) {
+    if (options.amppages) {
       Handlebars.registerPartial({
         ampheader: grunt.file.read(options.amptemplate.header),
         ampfooter: grunt.file.read(options.amptemplate.footer)
@@ -185,7 +185,7 @@ module.exports = function (grunt) {
     archiveTemplate = Handlebars.compile(grunt.file.read(options.template.archive));
     notFoundTemplate = Handlebars.compile(grunt.file.read(options.template.notfound));
     categoryTemplate = Handlebars.compile(grunt.file.read(options.template.category));
-    if (options.amptemplate) {
+    if (options.amppages) {
       var ampPostTemplate = Handlebars.compile(grunt.file.read(options.amptemplate.post));
     }
 
@@ -205,7 +205,7 @@ module.exports = function (grunt) {
       data = {
         year: options.year,
         data: options.data,
-        amptemplates: options.amptemplate,
+        amppages: options.amppages,
         domain: options.domain,
         canonical: options.data.url + permalink + '/',
         path: permalink + '/',
@@ -550,7 +550,7 @@ module.exports = function (grunt) {
 
     // Generate AMP posts
     // First, change renderer settings
-    if (options.amptemplate) {
+    if (options.amppages) {
       mdoptions = {
         gfm: true,
         tables: true,

@@ -63,6 +63,7 @@ module.exports = function (grunt) {
             robots: 'templates/robots.txt',
             category: 'templates/category.hbs'
           },
+          amppages: true,
           amptemplate: {
             post: 'templates/amp/post.hbs',
             header: 'templates/amp/header.hbs',
@@ -100,6 +101,7 @@ module.exports = function (grunt) {
             robots: 'templates/robots.txt',
             category: 'templates/category.hbs'
           },
+          amppages: true,
           amptemplate: {
             post: 'templates/amp/post.hbs',
             header: 'templates/amp/header.hbs',
