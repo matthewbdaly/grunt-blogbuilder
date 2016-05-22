@@ -561,7 +561,7 @@ module.exports = function (grunt) {
       var ampRenderer = new AmpMarked.Renderer();
       ampRenderer.image = function (href, title, text) {
         return '';
-      }
+      };
       mdoptions.renderer = ampRenderer;
       AmpMarked.setOptions(mdoptions);
 
