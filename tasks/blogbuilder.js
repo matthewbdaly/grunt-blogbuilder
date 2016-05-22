@@ -548,7 +548,68 @@ module.exports = function (grunt) {
     grunt.file.copy(options.template.robots, options.www.dest + '/robots.txt');
 
     // Generate AMP posts
+    // First, change renderer settings
     if (options.amptemplate) {
+      mdoptions = {
+        gfm: true,
+        tables: true,
+        smartLists: true,
+        smartypants: true
+      };
+      var AmpMarked = require('meta-marked');
+      AmpMarked.setOptions(mdoptions);
+      var ampRenderer = new AmpMarked.Renderer();
+      ampRenderer.image = function (href, title, text) {
+        return '';
+      }
+      mdoptions.renderer = ampRenderer;
+      AmpMarked.setOptions(mdoptions);
+
+      // Then reload post items
+      post_items = [];
+      posts.forEach(function (file) {
+        // Convert it to Markdown
+        content = grunt.file.read(file);
+        md = new MarkedMetadata(content);
+        mdcontent = md.html;
+        meta = md.meta;
+
+        // Get path
+        permalink = '/blog/' + (file.replace(options.src.posts, '').replace(/(\d{4})-(\d{2})-(\d{2})-/, '$1/$2/$3/').replace('.markdown', '').replace('.md', ''));
+        path = options.www.dest + permalink;
+
+        // Render the Handlebars template with the content
+        data = {
+          year: options.year,
+          data: options.data,
+          domain: options.domain,
+          canonical: options.data.url + permalink + '/',
+          path: permalink + '/',
+          meta: {
+            title: meta.title.replace(/"/g, ''),
+            date: meta.date,
+            formattedDate: moment(new Date(meta.date)).format('Do MMMM YYYY h:mm a'),
+            categories: meta.categories || [],
+            comments: meta.comments
+          },
+          post: {
+            content: mdcontent,
+            rawcontent: content
+          }
+        };
+
+        // Don't publish drafts
+        if (typeof meta.draft === 'undefined' || meta.draft === false) {
+          post_items.push(data);
+        }
+      });
+
+      // Sort posts
+      post_items = _.sortBy(post_items, function (item) {
+        return item.meta.date;
+      });
+
+      // Generate posts
       post_items.forEach(function (data, index, list) {
         // Get next and previous
         if (index < (list.length - 1)) {
