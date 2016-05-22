@@ -1,6 +1,6 @@
 /*
  * blogbuilder
- * 
+ *
  *
  * Copyright (c) 2014 Matthew Daly
  * Licensed under the MIT license.
@@ -62,6 +62,11 @@ module.exports = function (grunt) {
             notfound: 'templates/404.hbs',
             robots: 'templates/robots.txt',
             category: 'templates/category.hbs'
+          },
+          amptemplate: {
+            post: 'templates/amp/post.hbs',
+            header: 'templates/amp/header.hbs',
+            footer: 'templates/footer/footer.hbs',
           },
           src: {
             posts: 'content/posts/',
