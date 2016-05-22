@@ -186,7 +186,7 @@ module.exports = function (grunt) {
     notFoundTemplate = Handlebars.compile(grunt.file.read(options.template.notfound));
     categoryTemplate = Handlebars.compile(grunt.file.read(options.template.category));
     if (options.amptemplate) {
-      ampPostTemplate = Handlebars.compile(grunt.file.read(options.amptemplate.post));
+      var ampPostTemplate = Handlebars.compile(grunt.file.read(options.amptemplate.post));
     }
 
     // Generate posts
@@ -287,7 +287,7 @@ module.exports = function (grunt) {
 
         // Write post to destination
         grunt.file.mkdir(options.www.dest + data.path);
-        grunt.file.write(options.www.dest + data.path + '/amp/index.html', output);
+        grunt.file.write(options.www.dest + data.path + 'amp/index.html', output);
       });
     }
 
