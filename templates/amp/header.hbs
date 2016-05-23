@@ -4,23 +4,206 @@
     <meta charset="utf-8">
     <title>{{#if meta.title}}{{capitalize meta.title}} - {{/if}}{{capitalize data.title}}</title>
     <link rel="canonical" href="{{ canonical }}">
+    <link rel="alternate" type="application/rss+xml" title="{{capitalize data.title}} - feed" href="/rss.xml" />
+    <link href="/favicon.ico" rel="icon">
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-    <script type="application/ld+json">
-      {
-        "@context": "http://schema.org",
-        "@type": "NewsArticle",
-        "headline": "Open-source framework for publishing content",
-        "datePublished": "2015-10-07T12:02:41Z",
-        "image": [
-          "logo.jpg"
-        ]
+	 <script type="application/ld+json">
+		{
+  			"@context": "http://schema.org",
+  			"@type": "NewsArticle",
+  			"mainEntityOfPage": "{{ canonical }}",
+  			"headline": "{{ capitalize meta.title }}",
+  			"datePublished": "{{ this.meta.datePublished }}",
+  			"dateModified": "{{ this.meta.datePublished }}",
+  			"description": "{{ data.description }}",
+  			"author": {
+	 			"@type": "Person",
+	 			"name": "{{ data.author }}"
+  			},
+         "publisher": {
+            "@type": "Organization",
+            "name": "{{ capitalize data.title }}",
+            "logo": {
+               "@type": "ImageObject",
+	 			   "url": "{{ data.url }}/favicon.ico",
+	 			   "height": 16,
+	 			   "width": 16
+           }
+         },
+  			"image": {
+	 			"@type": "ImageObject",
+	 			"url": "{{ data.url }}/favicon.ico",
+	 			"height": 16,
+	 			"width": 16
+  			}
+		}
+	 </script>
+	 <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    <link href='https://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet' type='text/css'>
+    <style amp-custom>
+      body {
+         background-color: #252525;
       }
-    </script>
-    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
-    <script async src="https://cdn.ampproject.org/v0.js"></script>
+      div.container {
+         background-color: #f8f8f8;
+         width: 100%;
+      }
+      p, h1, h2, h3, h4, h5, h6, li, nav a {
+         font-family: "PT Serif","Georgia","Helvetica Neue",Arial,sans-serif;
+         text-rendering: optimizelegibility;
+      }
+      p, li {
+         font-size: 1.4em;
+         line-height: 1.5em;
+      }
+      header {
+         padding: 20px;
+         color: #505050;
+      }
+      header h1 {
+         font-size: 3em;
+         line-height: 1.2em;
+         color: #7f7f7f;
+      }
+      header h2 {
+         font-size: 1.5em;
+         color: #7f7f7f;
+      }
+      h1 a {
+         text-decoration: none;
+         color: #7f7f7f;
+      }
+      code {
+         white-space: pre-wrap;
+         word-wrap: break-word;
+         font-family: Menlo, Monaco, "Andale Mono", "Ubuntu Mono", "lucida console", monospace;
+         background-color: #cfcfcf;
+         padding: 5px;
+         border-radius: 3px;
+      }
+      pre {
+         white-space: pre-wrap;
+         word-wrap: break-word;
+      }
+      pre code {
+        display: block;
+        overflow-wrap: normal;
+        word-wrap: normal;
+        white-space: pre;
+        font-size: 1.2em;
+      }
+      article {
+         padding: 20px;
+      }
+      section {
+         margin-top: 10px;
+         margin-bottom: 10px;
+      }
+      amp-img {
+         background-color: gray;
+         border: 1px solid black;
+      }
+      .hljs {
+        display: block;
+        overflow-x: auto;
+        padding: 0.5em;
+        background: #474949;
+        color: #d1d9e1;
+      }
+      .hljs-comment,
+      .hljs-quote {
+        color: #969896;
+        font-style: italic;
+      }
+      .hljs-keyword,
+      .hljs-selector-tag,
+      .hljs-literal,
+      .hljs-type,
+      .hljs-addition {
+        color: #cc99cc;
+      }
+      .hljs-number,
+      .hljs-selector-attr,
+      .hljs-selector-pseudo {
+        color: #f99157;
+      }
+      .hljs-string,
+      .hljs-doctag,
+      .hljs-regexp {
+        color: #8abeb7;
+      }
+      .hljs-title,
+      .hljs-name,
+      .hljs-section,
+      .hljs-built_in {
+        color: #b5bd68;
+      }
+      .hljs-variable,
+      .hljs-template-variable,
+      .hljs-selector-id,
+      .hljs-class .hljs-title {
+         color: #ffcc66;
+      }
+      .hljs-section,
+      .hljs-name,
+      .hljs-strong {
+        font-weight: bold;
+      }
+      .hljs-symbol,
+      .hljs-bullet,
+      .hljs-subst,
+      .hljs-meta,
+      .hljs-link {
+        color: #f99157;
+      }
+      .hljs-deletion {
+        color: #dc322f;
+      }
+      .hljs-formula {
+        background: #eee8d5;
+      }
+      .hljs-attr,
+      .hljs-attribute {
+        color: #81a2be;
+      }
+      .hljs-emphasis {
+        font-style: italic;
+      }
+      ul.categories {
+         padding-left: 0px;
+         margin-bottom: 20px;
+      }
+      ul.categories li {
+         list-style-type: none;
+         display: inline-block;
+         margin-right: 20px;
+      }
+      ul.categories li a {
+         background-color: #303030;
+         border-radius: 3px;
+         padding: 3px;
+         color: #fff;
+         text-decoration: none;
+      }
+      a.commentlink, a.postlink {
+         background-color: #303030;
+         border-radius: 3px;
+         padding: 3px;
+         color: #fff;
+         text-decoration: none;
+      }
+      blockquote {
+         font-style: italic;
+         border-left: 2px solid #cfcfcf;
+      }
+      blockquote p {
+        font-size: 2.2em;
+      }
+      </style>
+		<script async src="https://cdn.ampproject.org/v0.js"></script>
   </head>
   <body>
-    <header>
-      <h1><a href="/">{{capitalize data.title}}</a></h1>
-      <h2>{{ data.description }}</h2>
-    </header>
+	  <header>
+		  <h1><a href="/">{{capitalize data.title}}</a></h1>
+		  <h2>{{ data.description }}</h2>
+	  </header>
