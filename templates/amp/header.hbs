@@ -15,26 +15,26 @@
   			"headline": "{{ capitalize meta.title }}",
   			"datePublished": "{{ this.meta.datePublished }}",
   			"dateModified": "{{ this.meta.datePublished }}",
-  			"description": "{{ data.description }}",
+  			"description": "{{ this.meta.description }}",
   			"author": {
-	 			"@type": "Person",
-	 			"name": "{{ data.author }}"
+	 			  "@type": "Person",
+	 			  "name": "{{ data.author }}"
   			},
-         "publisher": {
-            "@type": "Organization",
-            "name": "{{ capitalize data.title }}",
-            "logo": {
-               "@type": "ImageObject",
-	 			   "url": "{{ data.url }}/favicon.ico",
-	 			   "height": 16,
-	 			   "width": 16
-           }
-         },
+        "publisher": {
+          "@type": "Organization",
+          "name": "{{ capitalize data.title }}",
+          "logo": {
+            "@type": "ImageObject",
+	 			    "url": "{{ data.url }}/favicon.ico",
+	 			    "height": 16,
+	 			    "width": 16
+          }
+        },
   			"image": {
-	 			"@type": "ImageObject",
-	 			"url": "{{ data.url }}/favicon.ico",
-	 			"height": 16,
-	 			"width": 16
+	 			  "@type": "ImageObject",
+	 			  "url": "{{ data.url }}/favicon.ico",
+	 			  "height": 16,
+	 			  "width": 16
   			}
 		}
 	 </script>
