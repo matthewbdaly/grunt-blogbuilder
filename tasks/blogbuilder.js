@@ -590,6 +590,8 @@ module.exports = function (grunt) {
             title: meta.title.replace(/"/g, ''),
             date: meta.date,
             formattedDate: moment(new Date(meta.date)).format('Do MMMM YYYY h:mm a'),
+            datePublished: moment(new Date(meta.date)).toISOString(),
+            description: truncate(mdcontent, 100),
             categories: meta.categories || [],
             comments: meta.comments
           },
