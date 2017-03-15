@@ -16,7 +16,7 @@ module.exports = function (grunt) {
   grunt.registerMultiTask('blogbuilder', 'Grunt plugin for building a blog.', function () {
 
     // Declare variables
-    var parseUrl = require('url'), _ = require('lodash'), moment = require('moment'), recent_posts, categories, category, langs, hljs, content, Feed, feed, newObj, post, post_items = [], chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate, notFoundTemplate, categoryTemplate, permalink, searchIndex, store = {}, lunr = require('lunr'), feeditem, truncate = require('truncate'), pageFileName, indexPage = false;
+    var fs = require('fs'), parseUrl = require('url'), _ = require('lodash'), moment = require('moment'), recent_posts, categories, category, langs, hljs, content, Feed, feed, newObj, post, post_items = [], chunk, postChunks = [], md, mdcontent, meta, data, options, output, path, Handlebars, MarkedMetadata, posts, pages, postTemplate, pageTemplate, indexTemplate, archiveTemplate, notFoundTemplate, categoryTemplate, permalink, searchIndex, store = {}, lunr = require('lunr'), feeditem, truncate = require('truncate'), pageFileName, indexPage = false;
 
     // Merge task-specific and/or target-specific options with these defaults.
     options = this.options({
@@ -29,6 +29,11 @@ module.exports = function (grunt) {
 
     // Get Handlebars
     Handlebars = require('handlebars');
+
+    // Create a helper for versioning static assets
+    Handlebars.registerHelper('version', function (path) {
+      return path + '?v=' + fs.statSync(path).mtime.getTime();
+    });
 
     // Create a helper for joining arrays
     Handlebars.registerHelper('join', function (items) {
@@ -142,16 +147,16 @@ module.exports = function (grunt) {
       if (!lang) {
         return '<pre><code' + (singleline ? ' class="singleline"' : '') + '>' +
           codeoutput +
-            '</code></pre>';
+          '</code></pre>';
       }
 
       return '<pre><code class="' +
         this.options.langPrefix +
-          lang +
-            (singleline ? ' singleline' : '') +
-              '"><table>' +
-                codeoutput +
-                  '</table></code></pre>\n';
+        lang +
+        (singleline ? ' singleline' : '') +
+        '"><table>' +
+        codeoutput +
+        '</table></code></pre>\n';
     };
 
     // Set options
