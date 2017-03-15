@@ -45,6 +45,6 @@
     "truncate": "^1.0.5"
   },
   "devDependencies": {
-    "highlightjs": "^8.7.0"
+    "highlightjs": "^9.10.0"
   }
 }
