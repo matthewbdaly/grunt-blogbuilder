@@ -464,6 +464,7 @@ module.exports = function (grunt) {
         title: index + ' | ' + options.data.title,
         description: index + ' | ' + options.data.description,
         link: options.data.url + '/blog/categories/' + index.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '-') + '/',
+        hub: options.data.hub,
         generator: 'grunt-blogbuilder https://github.com/matthewbdaly/grunt-blogbuilder',
         copyright: options.data.author + ' ' + options.year,
         author: {
