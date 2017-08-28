@@ -410,8 +410,8 @@ module.exports = function (grunt) {
     }
 
     // Write the content to the file
-    grunt.file.write(options.www.dest + '/rss.xml', feed.render('rss-2.0'));
-    grunt.file.write(options.www.dest + '/atom.xml', feed.render('atom-1.0'));
+    grunt.file.write(options.www.dest + '/rss.xml', feed.rss2());
+    grunt.file.write(options.www.dest + '/atom.xml', feed.atom1());
 
     // Create categories
     categories = {};
@@ -485,8 +485,8 @@ module.exports = function (grunt) {
 
       // Write feed
       path = options.www.dest + '/blog/categories/' + index.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '-');
-      grunt.file.write(path + '/rss.xml', feed.render('rss-2.0'));
-      grunt.file.write(path + '/atom.xml', feed.render('atom-1.0'));
+      grunt.file.write(path + '/rss.xml', feed.rss2());
+      grunt.file.write(path + '/atom.xml', feed.atom1());
     });
 
     // Generate index
