@@ -377,7 +377,7 @@ module.exports = function (grunt) {
       link: options.data.url,
       copyright: options.data.author + ' ' + options.year,
       generator: 'grunt-blogbuilder https://github.com/matthewbdaly/grunt-blogbuilder',
-      hub: options.data.hub,
+      hub: options.data.hub || null,
       author: {
         name: options.data.author,
         email: options.data.email,
@@ -464,7 +464,7 @@ module.exports = function (grunt) {
         title: index + ' | ' + options.data.title,
         description: index + ' | ' + options.data.description,
         link: options.data.url + '/blog/categories/' + index.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '-') + '/',
-        hub: options.data.hub,
+        hub: options.data.hub || null,
         generator: 'grunt-blogbuilder https://github.com/matthewbdaly/grunt-blogbuilder',
         copyright: options.data.author + ' ' + options.year,
         author: {
