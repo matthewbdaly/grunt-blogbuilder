@@ -377,6 +377,7 @@ module.exports = function (grunt) {
       link: options.data.url,
       copyright: options.data.author + ' ' + options.year,
       generator: 'grunt-blogbuilder https://github.com/matthewbdaly/grunt-blogbuilder',
+      hub: options.data.hub,
       author: {
         name: options.data.author,
         email: options.data.email,

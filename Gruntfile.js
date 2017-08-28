@@ -50,7 +50,8 @@ module.exports = function (grunt) {
               'blog'
             ],
             truncatefeed: 0,
-            linenos: true
+            linenos: true,
+            hub: 'https://pubsubhubbub.appspot.com/'
           },
           template: {
             post: 'templates/post.hbs',
@@ -88,7 +89,8 @@ module.exports = function (grunt) {
             facebookcomments: "",
             disqus: "",
             title: 'My test blog',
-            description: 'A test blog'
+            description: 'A test blog',
+            hub: 'https://pubsubhubbub.appspot.com/'
           },
           template: {
             post: 'templates/post.hbs',
