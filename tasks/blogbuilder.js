@@ -86,7 +86,7 @@ module.exports = function (grunt) {
     Feed = require('feed');
 
     // Get Highlight.js
-    hljs = require('highlight.js');
+    hljs = require('highlightjs');
 
     // Set options
     hljs.configure({
