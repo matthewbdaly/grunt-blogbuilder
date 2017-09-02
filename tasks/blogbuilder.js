@@ -150,10 +150,19 @@ module.exports = function (grunt) {
           '</code></pre>';
       }
 
+      if (singleline) {
+         return '<pre><code class="' +
+              this.options.langPrefix +
+              lang +
+              ' singleline' +
+              '">' +
+              codeoutput +
+              '</code></pre>\n';
+      }
+
       return '<pre><code class="' +
         this.options.langPrefix +
         lang +
-        (singleline ? ' singleline' : '') +
         '"><table>' +
         codeoutput +
         '</table></code></pre>\n';
