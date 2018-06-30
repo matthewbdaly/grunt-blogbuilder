@@ -30,17 +30,17 @@
   },
   "dependencies": {
     "feed": "^1.1.0",
-    "grunt": "^0.4.5",
+    "grunt": "^1.0.3",
     "grunt-contrib-clean": "^0.6.0",
-    "grunt-contrib-jshint": "^0.11.3",
-    "grunt-contrib-nodeunit": "^0.4.1",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-nodeunit": "^2.0.0",
     "handlebars": "^4.0.5",
     "jshint-stylish": "^2.0.1",
     "load-grunt-tasks": "^3.2.0",
-    "lodash": "^3.10.1",
+    "lodash": "^4.17.10",
     "lunr": "^0.6.0",
     "meta-marked": "^0.3.4",
-    "moment": "^2.14.1",
+    "moment": "^2.22.2",
     "truncate": "^1.0.5"
   },
   "devDependencies": {
