@@ -1,6 +1,6 @@
 {
   "name": "grunt-blogbuilder",
-  "version": "0.0.80",
+  "version": "0.0.81",
   "description": "Grunt plugin for building a blog.",
   "repository": {
     "type": "git",
@@ -29,12 +29,13 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "feed": "^1.1.0",
+    "feed": "^1.1.1",
     "grunt": "^1.0.3",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-nodeunit": "^2.0.0",
-    "handlebars": "^4.0.5",
+    "handlebars": "^4.0.11",
+    "highlight.js": "^9.12.0",
     "jshint-stylish": "^2.0.1",
     "load-grunt-tasks": "^3.2.0",
     "lodash": "^4.17.10",
@@ -42,8 +43,5 @@
     "meta-marked": "^0.3.4",
     "moment": "^2.22.2",
     "truncate": "^1.0.5"
-  },
-  "devDependencies": {
-    "highlightjs": "^9.10.0"
   }
 }
