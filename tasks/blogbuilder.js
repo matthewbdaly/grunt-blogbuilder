@@ -186,7 +186,16 @@ module.exports = function (grunt) {
     if (options.data.linenos) {
       mdoptions.renderer = renderer;
     }
-    MarkedMetadata.setOptions(mdoptions);
+
+    // Set feed options
+    var feedrenderer = new MarkedMetadata.Renderer();
+    var feedoptions = {
+      gfm: true,
+      tables: true,
+      smartLists: true,
+      smartypants: true,
+      renderer: feedrenderer
+    };
 
     // Get matching files
     posts = grunt.file.expand(options.src.posts + '*.md', options.src.posts + '*.markdown');
@@ -207,7 +216,7 @@ module.exports = function (grunt) {
     posts.forEach(function (file) {
       // Convert it to Markdown
       content = grunt.file.read(file);
-      md = new MarkedMetadata(content);
+      md = new MarkedMetadata(content, mdoptions);
       mdcontent = md.html;
       meta = md.meta;
 
@@ -232,7 +241,8 @@ module.exports = function (grunt) {
         },
         post: {
           content: mdcontent,
-          rawcontent: content
+          rawcontent: content,
+          feedcontent: new MarkedMetadata(content, feedoptions).html
         }
       };
 
@@ -300,7 +310,7 @@ module.exports = function (grunt) {
     pages.forEach(function (file) {
       // Convert it to Markdown
       content = grunt.file.read(file);
-      md = new MarkedMetadata(content);
+      md = new MarkedMetadata(content, mdoptions);
       mdcontent = md.html;
       meta = md.meta;
       pageFileName = file.replace(options.src.pages, '').replace('.markdown', '').replace('.md', '');
@@ -410,9 +420,9 @@ module.exports = function (grunt) {
 
       // If set to truncate feed items, do so
       if (options.data.truncatefeed) {
-        feeditem.description = truncate(post_items[post].post.content, options.data.truncatefeed);
+        feeditem.description = truncate(post_items[post].post.feedcontent, options.data.truncatefeed);
       } else {
-        feeditem.description = post_items[post].post.content;
+        feeditem.description = post_items[post].post.feedcontent;
       }
 
       // Add to feed
@@ -488,7 +498,7 @@ module.exports = function (grunt) {
         // Add to feed
         feed.addItem({
           title: category_posts[post].meta.title,
-          description: category_posts[post].post.content,
+          description: category_posts[post].post.feedcontent,
           link: options.data.url + category_posts[post].path,
           date: new Date(category_posts[post].meta.date)
         });
@@ -587,7 +597,7 @@ module.exports = function (grunt) {
       posts.forEach(function (file) {
         // Convert it to Markdown
         content = grunt.file.read(file);
-        md = new MarkedMetadata(content);
+        md = new MarkedMetadata(content, mdoptions);
         mdcontent = md.html;
         meta = md.meta;
 
