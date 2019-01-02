@@ -581,7 +581,15 @@ module.exports = function (grunt) {
         gfm: true,
         tables: true,
         smartLists: true,
-        smartypants: true
+        smartypants: true,
+        langPrefix: 'hljs lang-',
+        highlight: function (code, lang) {
+          if (typeof lang !== "undefined" && langs.indexOf(lang) > 0) {
+            return hljs.highlight(lang, code).value;
+          } else {
+            return hljs.highlightAuto(code).value;
+          }
+        }
       };
       var AmpMarked = require('meta-marked');
       AmpMarked.setOptions(mdoptions);
