@@ -117,6 +117,18 @@ module.exports = function (grunt) {
 
     // Create custom renderer
     var renderer = new MarkedMetadata.Renderer();
+
+    renderer.table = function (header, body) {
+      return '<table class="table table-bordered">\n'
+        + '<thead>\n'
+        + header
+        + '</thead>\n'
+        + '<tbody>\n'
+        + body
+        + '</tbody>\n'
+        + '</table>\n';
+    };
+
     renderer.code = function (code, lang, escaped) {
       if (this.options.highlight) {
         var out = this.options.highlight(code, lang);
